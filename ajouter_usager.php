@@ -1,19 +1,29 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include 'BD.php';
+include 'BD.php';
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $civilite = $_POST['civilite'];
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
-    // Ajoutez d'autres champs selon votre base de données
+    $adresse = $_POST['adresse'];
+    $ville = $_POST['ville'];
+    $code_postal = $_POST['code_postal'];
+    $date_naissance = $_POST['date_naissance'];
+    $numero_secu = $_POST['numero_secu'];
 
     try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-        $sql = "INSERT INTO usagers (nom, prenom, ...) VALUES (:nom, :prenom, ...)";
-        $stmt = $pdo->prepare($sql);
+        $sql = "INSERT INTO usager (Civilité, Nom, Prénom, Adresse, Ville, Code_Postal, Date_Naissance, Numero_Secu) 
+                VALUES (:civilite, :nom, :prenom, :adresse, :ville, :code_postal, :date_naissance, :numero_secu)";
+        $stmt = $conn->prepare($sql);
 
+        $stmt->bindParam(':civilite', $civilite, PDO::PARAM_STR);
         $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
         $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-        // Liez d'autres paramètres
+        $stmt->bindParam(':adresse', $adresse, PDO::PARAM_STR);
+        $stmt->bindParam(':ville', $ville, PDO::PARAM_STR);
+        $stmt->bindParam(':code_postal', $code_postal, PDO::PARAM_STR);
+        $stmt->bindParam(':date_naissance', $date_naissance);
+        $stmt->bindParam(':numero_secu', $numero_secu, PDO::PARAM_INT);
 
         $stmt->execute();
         echo "Usager ajouté avec succès.";
@@ -24,8 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <form method="post" action="ajouter_usager.php">
+    Civilité: <input type="text" name="civilite">
     Nom: <input type="text" name="nom">
     Prénom: <input type="text" name="prenom">
-    <!-- Ajoutez d'autres champs de formulaire ici -->
+    Adresse: <input type="text" name="adresse">
+    Ville: <input type="text" name="ville">
+    Code Postal: <input type="text" name="code_postal">
+    Date de Naissance: <input type="date" name="date_naissance">
+    Numéro de Sécurité Sociale: <input type="number" name="numero_secu">
     <input type="submit" value="Ajouter">
 </form>

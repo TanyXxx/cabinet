@@ -1,0 +1,11 @@
+<form method="post" action="php/traitement_modifier_medecin.php">
+    <input type="hidden" name="id" value="<?php echo isset($medecin['ID_Medecin']) ? htmlspecialchars($medecin['ID_Medecin']) : ''; ?>">
+    Civilité:
+    <select name="civilite">
+        <option value="Madame" <?php echo (isset($medecin['Civilite']) && $medecin['Civilite'] == 'Madame') ? 'selected' : ''; ?>>Madame</option>
+        <option value="Monsieur" <?php echo (isset($medecin['Civilite']) && $medecin['Civilite'] == 'Monsieur') ? 'selected' : ''; ?>>Monsieur</option>
+    </select><br><br>
+    Nom: <input type="text" name="nom" value="<?php echo isset($medecin['Nom']) ? htmlspecialchars($medecin['Nom']) : ''; ?>" required><br><br>
+    Prénom: <input type="text" name="prenom" value="<?php echo isset($medecin['Prenom']) ? htmlspecialchars($medecin['Prenom']) : ''; ?>" required><br><br>
+    <input type="submit" value="Modifier Médecin">
+</form>

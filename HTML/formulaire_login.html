@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connexion</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Connexion</h2>
+        <?php if(isset($error)): ?>
+            <p class="error-message"><?php echo $error; ?></p>
+        <?php endif; ?>
+        <form action="php/traitement_login.php" method="post">
+            Nom d'utilisateur: <input type="text" name="username" required><br>
+            Mot de passe: <input type="password" name="password" required><br>
+            <input type="submit" value="Connexion">
+        </form>
+    </div>
+</body>
+</html>

@@ -15,6 +15,4 @@ try {
 } catch (PDOException $e) {
     die("Erreur : " . $e->getMessage());
 }
-
-include '../html/vue_afficher_usagers.html';
 ?>

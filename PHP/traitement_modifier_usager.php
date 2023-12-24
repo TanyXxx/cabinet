@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':lieuNaissance', $lieuNaissance, PDO::PARAM_STR);
         $stmt->bindParam(':dateNaissance', $dateNaissance);
         $stmt->bindParam(':numeroSecu', $numeroSecu, PDO::PARAM_STR);
-        var_dump($id, $civilite, $nom, $prenom, $adresse, $lieuNaissance, $dateNaissance, $numeroSecu);
+
         if (!$stmt->execute()) {
             print_r($stmt->errorInfo());
         } else {

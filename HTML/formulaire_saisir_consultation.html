@@ -1,6 +1,9 @@
 <h1>Saisie de Consultation</h1>
 <form method="post" action="php/traitement_saisir_consultation.php">
     Usager ID: <input type="number" name="idUsager" required><br>
+    Médecin: <select name="idMedecin" required>
+        <?php include 'php/generer_liste_medecins.php'; ?>
+    </select><br>
     Date de Consultation: <input type="date" name="dateConsultation" required><br>
     Heure: <input type="time" name="heure" required><br>
     Durée (en minutes): <input type="number" name="duree" required><br>

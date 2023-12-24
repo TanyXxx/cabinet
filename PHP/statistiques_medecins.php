@@ -2,15 +2,22 @@
 include 'BD.php';
 
 try {
-    // Ici, vous devrez écrire les requêtes SQL pour obtenir les statistiques des consultations par médecin
-    // ...
-
     echo "<h2>Durée totale des consultations par médecin</h2>";
-    echo "<table>";
+    echo "<table border='1'>";
     echo "<tr><th>Médecin</th><th>Durée totale (heures)</th></tr>";
 
-    // Affichage des résultats
-    // ...
+    // Remplacez 'ID_Medecin' par la colonne appropriée si différente dans votre table de consultation
+    $sql = "SELECT medecin.Nom, medecin.Prenom, SUM(consultation.Durée) as TotalDuree 
+            FROM consultation 
+            JOIN medecin ON consultation.ID_Medecin = medecin.ID_Medecin 
+            GROUP BY consultation.ID_Medecin";
+    $stmt = $conn->query($sql);
+
+    while ($ligne = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $nomMedecin = $ligne['Nom'] . " " . $ligne['Prenom'];
+        $totalHeures = $ligne['TotalDuree'];
+        echo "<tr><td>$nomMedecin</td><td>$totalHeures</td></tr>";
+    }
 
     echo "</table>";
 } catch (PDOException $e) {

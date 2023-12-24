@@ -1,0 +1,17 @@
+<?php if (!empty($usagers)): ?>
+    <table>
+        <tr><th>ID</th><th>Nom</th><th>Prénom</th><th>Adresse</th><th>Date de Naissance</th><th>Numéro de Sécurité Sociale</th></tr>
+        <?php foreach ($usagers as $usager): ?>
+            <tr>
+                <td><?php echo $usager['id']; ?></td>
+                <td><?php echo $usager['nom']; ?></td>
+                <td><?php echo $usager['prenom']; ?></td>
+                <td><?php echo $usager['adresse']; ?></td>
+                <td><?php echo $usager['date_naissance']; ?></td>
+                <td><?php echo $usager['numero_secu']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <p>Aucun usager trouvé.</p>
+<?php endif; ?>

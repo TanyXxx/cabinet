@@ -2,18 +2,19 @@
 include 'BD.php';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     $sql = "SELECT * FROM usagers";
     $stmt = $pdo->query($sql);
 
+    $usagers = [];
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch()) {
-            echo $row['nom'] . " " . $row['prenom'] . " - <a href='modifier_usager.php?id=" . $row['id'] . "'>Modifier</a><br>";
+            array_push($usagers, $row);
         }
-    } else {
-        echo "Aucun usager trouvé.";
     }
 } catch (PDOException $e) {
     die("Erreur : " . $e->getMessage());
 }
+
+include '../html/vue_afficher_usagers.html';
 ?>

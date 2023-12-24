@@ -10,7 +10,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <html>
 <head>
     <title>Ajout de Médecin</title>
-    <link rel="stylesheet" type="text/css" href="css/ajouter_usager.css">
+    <link rel="stylesheet" type="text/css" href="css/ajouter.css">
 </head>
 <body>
     <?php include 'menu.php'; ?>

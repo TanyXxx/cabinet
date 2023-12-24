@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
 <html>
 <head>
     <title>Modification d'Usager</title>
-    <link rel="stylesheet" type="text/css" href="css/ajouter_usager.css">
+    <link rel="stylesheet" type="text/css" href="css/ajouter.css">
 </head>
 <body>
     <?php if (isset($usager)): ?>

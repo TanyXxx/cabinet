@@ -11,7 +11,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 <head>
     <title>Ajout d'Usager</title>
-    <link rel="stylesheet" type="text/css" href="css/ajouter_usager.css">
+    <link rel="stylesheet" type="text/css" href="css/ajouter.css">
 </head>
 
 <body>

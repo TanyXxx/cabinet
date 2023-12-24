@@ -1,4 +1,12 @@
 <?php
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
+<?php
 include 'php/BD.php';
 
 if (isset($_GET['id'])) {
@@ -33,7 +41,7 @@ if (isset($_GET['id'])) {
 </head>
 <body>
     <?php if (isset($usager)): ?>
-        <!-- Inclusion du formulaire ici -->
+        <?php include 'menu.php'; ?>
         <?php include 'html/formulaire_modifier_usager.html'; ?>
     <?php endif; ?>
 </body>

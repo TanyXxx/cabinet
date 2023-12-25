@@ -2,7 +2,7 @@
 include 'BD.php';
 
 try {
-    $sql = "SELECT consultation.ID_Consultation, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, consultation.Date_Consultation, consultation.Heure, consultation.Durée 
+    $sql = "SELECT consultation.ID_Consultation, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, consultation.Date_Consultation, consultation.Heure, consultation.Duree 
             FROM consultation 
             JOIN usager ON consultation.ID_USAGER = usager.ID_USAGER 
             JOIN medecin ON consultation.ID_Medecin = medecin.ID_Medecin
@@ -20,7 +20,7 @@ try {
             echo "<td>" . htmlspecialchars($row['MedecinNom']) . " " . htmlspecialchars($row['MedecinPrenom']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Date_Consultation']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Heure']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['Durée']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['Duree']) . "</td>";
             echo "</tr>";
         }
 

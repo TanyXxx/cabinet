@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $duree = $_POST['duree'];
 
     try {
-        $sql = "INSERT INTO consultation (ID_USAGER, ID_Medecin, Date_Consultation, Heure, Durée) VALUES (:idUsager, :idMedecin, :dateConsultation, :heure, :duree)";
+        $sql = "INSERT INTO consultation (ID_USAGER, ID_Medecin, Date_Consultation, Heure, Duree) VALUES (:idUsager, :idMedecin, :dateConsultation, :heure, :duree)";
         $stmt = $conn->prepare($sql);
         
         $stmt->bindParam(':idUsager', $idUsager, PDO::PARAM_INT);

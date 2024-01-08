@@ -11,7 +11,7 @@ try {
 
     if ($stmt->rowCount() > 0) {
         echo "<table>";
-        echo "<tr><th>ID</th><th>Usager</th><th>Médecin</th><th>Date de Consultation</th><th>Heure</th><th>Durée (minutes)</th></tr>";
+        echo "<tr><th>ID</th><th>Usager</th><th>Médecin</th><th>Date de Consultation</th><th>Heure</th><th>Durée (minutes)</th><th>Actions</th></tr>";
 
         while ($row = $stmt->fetch()) {
             echo "<tr>";
@@ -21,6 +21,7 @@ try {
             echo "<td>" . htmlspecialchars($row['Date_Consultation']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Heure']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Duree']) . "</td>";
+            echo "<td><a href='modifier_consultation.php?id=" . $row['ID_Consultation'] . "'>Modifier</a> | <a href='supprimer_consultation.php?id=" . $row['ID_Consultation'] . "'>Supprimer</a></td>";
             echo "</tr>";
         }
 

@@ -1,0 +1,24 @@
+<form method="post" action="php/traitement_modifier_consultation.php">
+    <input type="hidden" name="id" value="<?php echo isset($consultation['ID_Consultation']) ? htmlspecialchars($consultation['ID_Consultation']) : ''; ?>">
+
+    Usager:
+    <select name="idUsager" required>
+        <?php include 'php/generer_usager.php'; ?>
+    </select><br>
+
+    Médecin:
+    <select name="idMedecin" required>
+        <?php include 'php/generer_medecin.php'; ?>
+    </select><br>
+
+    Date de Consultation: 
+    <input type="date" name="dateConsultation" value="<?php echo isset($consultation['Date_Consultation']) ? htmlspecialchars($consultation['Date_Consultation']) : ''; ?>" required><br>
+
+    Heure: 
+    <input type="time" name="heure" value="<?php echo isset($consultation['Heure']) ? htmlspecialchars($consultation['Heure']) : ''; ?>" required><br>
+
+    Durée (en minutes): 
+    <input type="number" name="duree" value="<?php echo isset($consultation['Duree']) ? htmlspecialchars($consultation['Duree']) : ''; ?>" required><br>
+
+    <input type="submit" value="Modifier Consultation">
+</form>

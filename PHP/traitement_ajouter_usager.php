@@ -9,12 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lieu_naissance = $_POST['lieu_naissance'];
     $date_naissance = $_POST['date_naissance'];
     $numero_secu = $_POST['numero_secu'];
-
+    $medecin_ref = $_POST['medecin_ref'];
     try {
-        $sql = "INSERT INTO usager (Civilite, Nom, Prenom, Adresse, Lieu_Naissance, Date_Naissance, Numero_Secu) 
-                VALUES (:civilite, :nom, :prenom, :adresse, :lieu_naissance, :date_naissance, :numero_secu)";
+        $sql = "INSERT INTO usager (Civilite, Nom, Prenom, Adresse, Lieu_Naissance, Date_Naissance, Numero_Secu, ID_Medecin_Ref) 
+                VALUES (:civilite, :nom, :prenom, :adresse, :lieu_naissance, :date_naissance, :numero_secu, :medecin_ref)";
         $stmt = $conn->prepare($sql);
-
+        
         $stmt->bindParam(':civilite', $civilite, PDO::PARAM_STR);
         $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
         $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':lieu_naissance', $lieu_naissance, PDO::PARAM_STR);
         $stmt->bindParam(':date_naissance', $date_naissance);
         $stmt->bindParam(':numero_secu', $numero_secu, PDO::PARAM_STR);
+        $stmt->bindParam(':medecin_ref', $medecin_ref, PDO::PARAM_INT);
 
         $stmt->execute();
         echo "Usager ajouté avec succès.";

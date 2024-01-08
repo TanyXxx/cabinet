@@ -1,3 +1,4 @@
+<body>
     <form method="post" action="php/traitement_ajouter_usager.php">
         Civilité:
         <select name="civilite">
@@ -10,5 +11,9 @@
         Lieu de Naissance: <input type="text" name="lieu_naissance" required>
         Date de Naissance: <input type="date" name="date_naissance" required>
         Numéro de Sécurité Sociale: <input type="text" name="numero_secu" pattern="\d{13}" title="Le numéro de sécurité sociale doit contenir 13 chiffres" required>
+        Médecin référent:
+        <select name="medecin_ref">
+            <?php include 'php/generer_liste_medecins.php'; ?>
+        </select><br><br>
         <input type="submit" value="Ajouter">
     </form>

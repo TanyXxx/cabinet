@@ -18,7 +18,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         echo "<h2>Confirmez-vous la suppression du médecin ID: " . htmlspecialchars($id) . " ?</h2>";
-        echo "<a href='/cabinet/cabinet-1/php/traitement_supprimer_medecin.php?id=" . $id . "'>Confirmer la Suppression</a>";
+        echo "<a href='/cabinet/php/traitement_supprimer_medecin.php?id=" . $id . "'>Confirmer la Suppression</a>";
     } else {
         echo "<p>ID de médecin non spécifié.</p>";
     }

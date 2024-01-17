@@ -7,7 +7,6 @@
 <head>
     <title>Afficher Usagers</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!-- Assurez-vous que le chemin vers le fichier CSS est correct -->
 </head>
 
 <body>

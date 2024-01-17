@@ -7,7 +7,7 @@ try {
 
     if ($stmt->rowCount() > 0) {
         echo "<table>";
-        echo "<tr><th>Civilité</th><th>Nom</th><th>Prénom</th><th>Adresse</th><th>Lieu de Naissance</th><th>Date de Naissance</th><th>Numéro de Sécurité Sociale</th><th>Actions</th></tr>";
+        echo "<div class='test'><tr><th>Civilité</th><th>Nom</th><th>Prénom</th><th>Adresse</th><th>Lieu de Naissance</th><th>Date de Naissance</th><th>Numéro de Sécurité Sociale</th><th>Actions</th></tr></div>";
 
         while ($row = $stmt->fetch()) {
             echo "<tr>";

@@ -16,6 +16,7 @@
                 <li><a href="afficher_medecins.php">Médecins</a></li>
                 <li><a href="afficher_consultations.php">Consultations</a></li>
                 <li><a href="statistiques.php">Statistiques</a></li>
+                <li><a href="logout.php">Déconnexion</a></li>
             </ul>
         </nav>
     </header>

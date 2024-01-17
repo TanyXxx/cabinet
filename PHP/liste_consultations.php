@@ -56,7 +56,7 @@ if ($stmt->rowCount() > 0) {
     }
 
     echo "</table>";
-} else {
+    echo "<button onclick=\"window.location.href='saisir_consultation.php'\">Ajouter Consultation</button>";} else {
     echo "Aucune consultation trouvée.";
 }
 ?>

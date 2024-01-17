@@ -1,11 +1,43 @@
-<h1>Saisie de Consultation</h1>
-<form method="post" action="php/traitement_saisir_consultation.php">
-    Usager ID: <input type="number" name="idUsager" required><br>
-    Médecin: <select name="idMedecin" required>
-        <?php include 'php/generer_liste_medecins.php'; ?>
-    </select><br>
-    Date de Consultation: <input type="date" name="dateConsultation" required><br>
-    Heure: <input type="time" name="heure" required><br>
-    Durée (en minutes): <input type="number" name="duree" required><br>
-    <input type="submit" value="Enregistrer la Consultation">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+    </style>
+</head>
+<body>
+
+    <form class="form-saisir-consultation" method="post" action="php/traitement_saisir_consultation.php" class="container-saisir-consultation">
+        <div>
+            <label for="idUsager">Nom de l'usager:</label>
+            <select name="idUsager" required>
+                <?php include 'php/generer_liste_usager.php'; ?>
+            </select>
+        </div>
+        <div class="nom-medecin-saisir-consultation">
+            <label for="idMedecin">Nom du médecin:</label>
+            <select name="idMedecin" required>
+                <?php include 'php/generer_liste_medecins.php'; ?>
+            </select>
+        </div>
+        <div class="date-consultation">
+            <label for="dateConsultation">Date de Consultation:</label>
+            <input type="date" name="dateConsultation" required>
+        </div>
+        <div class="heure-saisir-consultation">
+            <label for="heure">Heure:</label>
+            <input type="time" name="heure" required>
+        </div>
+        <div>
+            <label for="duree">Durée (en minutes):</label>
+            <input type="number" name="duree" required>
+        </div>
+        <div class="btn-submit-saisirconsultation">
+            <input class='btnsubmit' type="submit" value="Enregistrer la Consultation">
+        </div>
+    </form>
+
+</body>
+</html>

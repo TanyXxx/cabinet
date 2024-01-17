@@ -40,3 +40,44 @@ a:hover {
 .test{
     display: flex;
 }
+
+/* Formulaire saisir-consultation*/
+
+.form-saisir-consultation{
+    margin-top: 50px;
+    display: grid;
+    gap: 10px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.form-saisir-consultation div {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+}
+
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.btnsubmit{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.btn-submit-saisirconsultation{
+    display: flex;
+    justify-content: center;
+}

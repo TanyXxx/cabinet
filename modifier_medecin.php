@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
 } else {
     echo "ID de médecin non spécifié.";
     exit;
-}
+} 
 ?>
 
 <!DOCTYPE html>

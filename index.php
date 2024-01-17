@@ -1,10 +1,5 @@
-<?php
-session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-?>
+<?php include 'php/session.php'?>
+
 
 <!DOCTYPE html>
 <html>
@@ -15,6 +10,5 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <body>
     <?php include 'menu.php'; ?>
     <h1>Bienvenue dans le système de gestion du cabinet médical</h1>
-    <!-- Autres contenus -->
 </body>
 </html>

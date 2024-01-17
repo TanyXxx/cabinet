@@ -1,5 +1,7 @@
 /* Style général de la page */
-body {
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
+.body-menu {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -7,10 +9,10 @@ body {
 }
 
 /* Style de l'en-tête */
-header {
-    background-color: #333;
-    color: white;
-    padding: 10px 0;
+.header-menu {
+    background-color: lightgray;
+    color: black;
+    padding: 20px 0;
     text-align: center;
 }
 
@@ -21,25 +23,28 @@ header {
 }
 
 /* Style du menu */
-nav ul {
+.nav-menu ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-nav ul li {
+.nav-menu ul li {
     display: inline;
     margin-right: 20px;
 }
 
-nav ul li a {
-    color: white;
+.nav-menu ul li a {
+    font-size: 1.5em;
+    font-family: "Prata", sans-serif;
+    color: black;
     text-decoration: none;
     font-weight: bold;
 }
 
-nav ul li a:hover {
+.nav-menu ul li a:hover {
     text-decoration: underline;
+
 }
 
 /* Style du contenu principal */
@@ -47,6 +52,10 @@ nav ul li a:hover {
     padding: 20px;
     background-color: white;
     margin-top: 20px;
+}
+
+.expand-on-hover:hover {
+    transform: scale(1.2); /* ou tout autre facteur d'agrandissement souhaité */
 }
 
 /* Autres styles spécifiques à vos besoins */

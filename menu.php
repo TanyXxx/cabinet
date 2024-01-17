@@ -4,12 +4,9 @@
     <title>Votre Titre de Site</title>
     <link rel="stylesheet" type="text/css" href="css/menu.css">
 </head>
-<body>
-    <header>
-        <div class="logo">
-            <!-- Logo du site ici, si nécessaire -->
-        </div>
-        <nav>
+<body class="body-menu">
+    <header class="header-menu">
+        <nav class="nav-menu">
             <ul>
                 <li><a href="index.php">Accueil</a></li>
                 <li><a href="afficher_usagers.php">Usagers</a></li>

@@ -3,12 +3,16 @@
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Accueil - Gestion Cabinet Médical</title>
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-</head>
-<body>
+    <head>
+        <title>Accueil - Gestion Cabinet Médical</title>
+    </head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <?php include 'menu.php'; ?>
-    <h1>Bienvenue dans le système de gestion du cabinet médical</h1>
-</body>
-</html>
+    <body class="body-index">
+        <h1 class="h1-index">Bienvenue dans le système de gestion du cabinet médical!</h1>
+        <div class="image-index">
+        <img src=""alt="Description de l'image">
+        </div>
+    </body>
+        </html>
+        

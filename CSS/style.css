@@ -1,45 +1,29 @@
-body {
-    font-family: Arial, sans-serif;
+/*Page d'accueil*/
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
+
+.h1-index{
+    
+    font-family: "Prata", sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.body-index {
+    display: flex;
+    height: 100vh;
+    font-family: "Prata", sans-serif;
     background-color: #f4f4f4;
     padding: 20px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
 
-table, th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f0f0f0;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tr:hover {
-    background-color: #ddd;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.test{
+.image-index{
     display: flex;
+    height: 50px;
+    border: 2px solid;
 }
+
 
 /* Formulaire saisir-consultation*/
 
@@ -80,4 +64,47 @@ input[type="submit"]:hover {
 .btn-submit-saisirconsultation{
     display: flex;
     justify-content: center;
+}
+
+
+
+
+/*Autres*/
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.test{
+    display: flex;
 }

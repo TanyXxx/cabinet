@@ -1,0 +1,52 @@
+/* Style général de la page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style de l'en-tête */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Style du logo */
+.logo {
+    display: inline-block;
+    /* Ajoutez des styles spécifiques pour votre logo ici */
+}
+
+/* Style du menu */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Style du contenu principal */
+.content {
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+}
+
+/* Autres styles spécifiques à vos besoins */

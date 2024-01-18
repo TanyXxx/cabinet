@@ -23,10 +23,16 @@ try {
         }
 
         echo "</table>";
-        echo "<button onclick=\"window.location.href='ajouter_usager.php'\">Ajouter un usager</button>";
+        ?>
+        <div class="div-btn-ajouter-usager">
+            <?php
+        echo "<button class='btn-ajouter-usager'onclick=\"window.location.href='ajouter_usager.php'\">Ajouter un usager</button>";
     } else {
         echo "Aucun usager trouvé.";
     }
+    ?>
+        </div>
+        <?php
 } catch (PDOException $e) {
     die("Erreur : " . $e->getMessage());
 }

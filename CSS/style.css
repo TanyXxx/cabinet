@@ -74,9 +74,10 @@ input[type="submit"]:hover {
 
 
 
-/*Afficher usager*/
+/*Ajouter usager*/
 
 .btn-ajouter-usager{
+    font-family: "Prata", sans-serif;
     font-size: 20px;
 }
 
@@ -86,17 +87,34 @@ input[type="submit"]:hover {
     justify-content: center;
 }
 
+/*Ajouter consultation*/
+
+
+.div-btn-liste-consultation{
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+
+.btn-ajouter-consultation{
+    font-family: "Prata", sans-serif;
+    font-size: 20px;
+}
+
 
 /*Autres*/
 
 
 table {
+    font-family: "Prata", sans-serif;
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
 table, th, td {
+    font-family: "Prata", sans-serif;
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;

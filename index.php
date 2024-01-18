@@ -11,7 +11,7 @@
     <body class="body-index">
         <h1 class="h1-index">Bienvenue dans le système de gestion du cabinet médical!</h1>
         <div class="image-index">
-        <img src=""alt="Description de l'image">
+        <img src="Image/Cabinet-médical.jpg" alt="Cabinet médical">
         </div>
     </body>
         </html>

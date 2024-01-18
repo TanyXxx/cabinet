@@ -19,9 +19,15 @@
 
 
 .image-index{
-    display: flex;
-    height: 50px;
+    margin-left: 25em;
+    width: 50%;
+    height: 75vh;
     border: 2px solid;
+}
+
+.image-index img{
+    width: 100%;
+    height: 100%;
 }
 
 

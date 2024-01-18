@@ -19,9 +19,13 @@ try {
         }
 
         echo "</table>";
-    } else {
-        echo "Aucun médecin trouvé.";
-    }
+        ?>
+<div class="div-btn-liste-consultation">    
+        <?php
+        echo "<button class='btn-ajouter-consultation'onclick=\"window.location.href='ajouter_medecin.php'\">Ajouter Medecin</button>";}
+        ?>
+</div>
+<?php
 } catch (PDOException $e) {
     die("Erreur : " . $e->getMessage());
 }

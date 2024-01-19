@@ -8,7 +8,7 @@
 
 <head>
     <title>Statistiques du Cabinet Médical</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="CSS/style.css">
 </head>
 
 <body class="body-afficher-statistiques">

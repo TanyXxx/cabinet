@@ -31,7 +31,7 @@ if (isset($_GET['id'])) {
 <html>
 <head>
     <title>Modification de Médecin</title>
-    <link rel="stylesheet" type="text/css" href="css/ajouter.css">
+    <link rel="stylesheet" type="text/css" href="CSS/ajouter.css">
 </head>
 <body>
     <?php if (isset($medecin)): ?>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Votre Titre de Site</title>
-    <link rel="stylesheet" type="text/css" href="css/menu.css">
+    <link rel="stylesheet" type="text/css" href="CSS/menu.css">
 </head>
 <body class="body-menu">
     <header class="header-menu">

@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
 <html>
 <head>
     <title>Modification de Consultation</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="CSS/style.css">
 </head>
 <body>
     <?php include 'menu.php'; ?>

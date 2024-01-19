@@ -6,7 +6,7 @@
     <head>
         <title>Accueil - Gestion Cabinet Médical</title>
     </head>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="CSS/style.css">
     <?php include 'menu.php'; ?>
     <body class="body-index">
         <h1 class="h1-index">Bienvenue dans le système de gestion du cabinet médical!</h1>

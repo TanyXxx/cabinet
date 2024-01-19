@@ -6,7 +6,7 @@
 
 <head>
     <title>Supprimer Usager</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css"> <!-- Assurez-vous que le chemin est correct -->
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css"> <!-- Assurez-vous que le chemin est correct -->
 </head>
 
 <body>

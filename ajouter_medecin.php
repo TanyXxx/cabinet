@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Ajout de Médecin</title>
-    <link rel="stylesheet" type="text/css" href="css/ajouter.css">
+    <link rel="stylesheet" type="text/css" href="CSS/ajouter.css">
 </head>
 <body>
     <?php include 'menu.php'; ?>

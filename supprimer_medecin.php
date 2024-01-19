@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>Supprimer Médecin</title>
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
 </head>
 <body>
     <?php include 'menu.php'; ?>

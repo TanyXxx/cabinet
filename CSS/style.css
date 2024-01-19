@@ -64,8 +64,6 @@ label {
 
 select,
 input {
-    padding: 10px;
-    margin-top: 5px;
     margin-bottom: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
@@ -101,6 +99,8 @@ input[type="submit"]:hover {
 
 /*Ajouter usager*/
 
+
+
 .btn-ajouter-usager{
     font-family: "Prata", sans-serif;
     font-size: 20px;
@@ -112,6 +112,9 @@ input[type="submit"]:hover {
     justify-content: center;
 }
 
+.input-ajouterusager{
+    background-color: lightblue;
+}
 /*Ajouter consultation*/
 
 
@@ -202,3 +205,32 @@ a:hover {
 }
 
 
+
+
+.body-afficher-consultation{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.body-afficher-medecin{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.body-afficher-usagers  {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.body-afficher-statistiques{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}

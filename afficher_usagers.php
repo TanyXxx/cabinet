@@ -9,9 +9,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body>
+<body class="body-afficher-usagers">
     <?php include 'menu.php'; ?>
     <?php include 'php/liste_usagers.php'; ?>
 </body>
+<?php include 'footer.php'?>
 
 </html>

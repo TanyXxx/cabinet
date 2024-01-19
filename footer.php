@@ -5,26 +5,14 @@
         <div class="footer-content">
             <div class="footer-section about">
                 <h2>À propos</h2>
-                <p>Informations sur votre cabinet médical...</p>
-            </div>
+                <p> Bienvenue dans le Cabinet Médical</p>
 
             <div class="footer-section contact">
                 <h2>Contact</h2>
                 <p>Email : contact@cabinet-medical.com</p>
-                <p>Téléphone : +XX XXXX XXXX</p>
-            </div>
-
-            <div class="footer-section links">
-                <h2>Liens utiles</h2>
-                <ul>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">À propos</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
+                <p>Téléphone : +33 6 37 75 76 15</p>
         </div>
-
+        </div>
         <div class="footer-bottom">
             <p>&copy; 2024 Cabinet Médical. Tous droits réservés.</p>
         </div>

@@ -1,6 +1,6 @@
-<?php include 'php/session.php'?>
+<?php include 'PHP/session.php'?>
 <?php
-include 'php/BD.php';
+include 'PHP/BD.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -34,6 +34,6 @@ if (isset($_GET['id'])) {
 </head>
 <body>
     <?php include 'menu.php'; ?>
-    <?php include 'html/formulaire_modifier_consultation.html'; ?>
+    <?php include 'HTML/formulaire_modifier_consultation.html'; ?>
 </body>
 </html>

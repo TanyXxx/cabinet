@@ -1,4 +1,4 @@
-<?php include 'php/session.php'?>
+<?php include 'PHP/session.php'?>
 
 <!DOCTYPE html>
 <html>
@@ -8,7 +8,7 @@
 </head>
 <body class="body-afficher-medecin">
     <?php include 'menu.php'; ?>
-    <?php include 'php/liste_medecins.php'; ?>
+    <?php include 'PHP/liste_medecins.php'; ?>
 </body>
 <?php include 'footer.php'?>
 </html>

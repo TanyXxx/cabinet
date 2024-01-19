@@ -1,4 +1,4 @@
-<?php include 'php/session.php'?>
+<?php include 'PHP/session.php'?>
 
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
 
 <body class="body-afficher-usagers">
     <?php include 'menu.php'; ?>
-    <?php include 'php/liste_usagers.php'; ?>
+    <?php include 'PHP/liste_usagers.php'; ?>
 </body>
 <?php include 'footer.php'?>
 

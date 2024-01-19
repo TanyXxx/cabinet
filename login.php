@@ -1,2 +1,2 @@
-<?php include 'php/traitement_login.php'; ?>
-<?php include 'html/formulaire_login.html'; ?>
+<?php include 'PHP/traitement_login.php'; ?>
+<?php include 'HTML/formulaire_login.html'; ?>

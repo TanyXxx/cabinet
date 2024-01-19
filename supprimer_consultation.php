@@ -1,4 +1,4 @@
-<?php include 'php/session.php'?>
+<?php include 'PHP/session.php'?>
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
         echo "<h2>Confirmez-vous la suppression de la consultation ID: " . htmlspecialchars($id) . " ?</h2>";
-        echo "<a href='php/traitement_supprimer_consultation.php?id=" . $id . "'>Confirmer la Suppression</a>";
+        echo "<a href='PHP/traitement_supprimer_consultation.php?id=" . $id . "'>Confirmer la Suppression</a>";
     } else {
         echo "<p>ID de consultation non spécifié.</p>";
     } 

@@ -1,8 +1,8 @@
-<?php include 'php/session.php'?>
+<?php include 'PHP/session.php'?>
 
 
 <?php
-include 'php/BD.php';
+include 'PHP/BD.php';
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -37,7 +37,7 @@ if (isset($_GET['id'])) {
 <body>
     <?php if (isset($usager)): ?>
         <?php include 'menu.php'; ?>
-        <?php include 'html/formulaire_modifier_usager.html'; ?>
+        <?php include 'HTML/formulaire_modifier_usager.html'; ?>
     <?php endif; ?>
 </body>
 </html>

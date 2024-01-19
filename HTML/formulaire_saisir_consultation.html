@@ -9,17 +9,17 @@
 </head>
 <body>
     <div class="container-container">
-    <form class="form-saisir-consultation" method="post" action="php/traitement_saisir_consultation.php" class="container-saisir-consultation">
+    <form class="form-saisir-consultation" method="post" action="PHP/traitement_saisir_consultation.php" class="container-saisir-consultation">
         <div>
             <label for="idUsager">Nom de l'usager:</label>
             <select name="idUsager" required>
-                <?php include 'php/generer_liste_usager.php'; ?>
+                <?php include 'PHP/generer_liste_usager.php'; ?>
             </select>
         </div>
         <div class="nom-medecin-saisir-consultation">
             <label for="idMedecin">Nom du médecin:</label>
             <select name="idMedecin" required>
-                <?php include 'php/generer_liste_medecins.php'; ?>
+                <?php include 'PHP/generer_liste_medecins.php'; ?>
             </select>
         </div>
         <div class="date-consultation">

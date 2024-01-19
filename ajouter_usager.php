@@ -1,4 +1,4 @@
-<?php include 'php/session.php'?>
+<?php include 'PHP/session.php'?>
 
 
 <!DOCTYPE html>
@@ -11,8 +11,8 @@
 
 <body>
     <?php include 'menu.php'; ?>
-    <?php include 'php/traitement_ajouter_usager.php'; ?>
-    <?php include 'html/formulaire_ajouter_usager.html'; ?>
+    <?php include 'PHP/traitement_ajouter_usager.php'; ?>
+    <?php include 'HTML/formulaire_ajouter_usager.html'; ?>
 </body>
 
 </html>

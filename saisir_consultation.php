@@ -1,4 +1,4 @@
-<?php include 'php/session.php'?>
+<?php include 'PHP/session.php'?>
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
 
 <body>
     <?php include 'menu.php'; ?>
-    <?php include 'html/formulaire_saisir_consultation.html'; ?>
+    <?php include 'HTML/formulaire_saisir_consultation.html'; ?>
 </body>
 
 </html>

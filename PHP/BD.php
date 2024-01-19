@@ -1,7 +1,7 @@
 <?php
-$servername = "localhost";
-$dbname = "cabinet";
-$username = "etu";
+$servername = "mysql-soltanhamadouche.alwaysdata.net";
+$dbname = "soltanhamadouche_cabinet";
+$username = "344167_etu";
 $password = "iutinfo";
 
 try {

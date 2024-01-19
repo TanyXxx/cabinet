@@ -8,10 +8,13 @@ CREATE TABLE medecin (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO medecin (Civilite, Nom, Prenom) VALUES
-('Monsieur', 'Dupont', 'Jean'),
-('Madame', 'Martin', 'Anne'),
-('Monsieur', 'Durand', 'Pierre'),
-('Madame', 'Lefebvre', 'Sophie');
+('Monsieur', 'Dubois', 'Philippe'),
+('Madame', 'Girard', 'Marie'),
+('Monsieur', 'Lefort', 'Thomas'),
+('Madame', 'Bertrand', 'Sophie');
+('Madame', 'Dufour', 'Isabelle'),
+('Monsieur', 'Leroux', 'Jean-Pierre'),
+('Madame', 'Moreau', 'Catherine');
 
 -- Création et insertion pour la table usager
 CREATE TABLE usager (
@@ -29,10 +32,14 @@ CREATE TABLE usager (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO usager (Civilite, Nom, Prenom, Adresse, Date_Naissance, Numero_Secu, Lieu_Naissance, ID_Medecin_Ref) VALUES
-('Monsieur', 'Bernard', 'Luc', '123 rue des Fleurs, Paris', '1990-05-12', '1234567890123', 'Paris', 1),
-('Madame', 'Petit', 'Marie', '456 avenue des Lilas, Lyon', '1985-02-20', '2345678901234', 'Lyon', 2),
-('Monsieur', 'Roux', 'François', '789 boulevard des Roses, Marseille', '1975-11-30', '3456789012345', 'Marseille', 3),
-('Madame', 'Leroy', 'Julie', '111 allée des Orchidées, Toulouse', '2000-08-15', '4567890123456', 'Toulouse', 4);
+('Monsieur', 'Martin', 'Luc', '123 rue de la République, Paris', '1988-04-25', '1234567890123', 'Paris', 1),
+('Madame', 'Dubois', 'Marie', '456 avenue des Lilas, Lyon', '1979-09-15', '2345678901234', 'Lyon', 2),
+('Monsieur', 'Roux', 'François', '789 boulevard des Roses, Marseille', '1985-02-20', '3456789012345', 'Marseille', 3),
+('Madame', 'Leroy', 'Julie', '111 allée des Orchidées, Toulouse', '1992-07-10', '4567890123456', 'Toulouse', 4);
+('Madame', 'Dupuis', 'Caroline', '567 avenue des Champs, Bordeaux', '1995-03-18', '5678901234567', 'Bordeaux', 1),
+('Monsieur', 'Lefebvre', 'Antoine', '234 rue de la Liberté, Lille', '1983-11-05', '6789012345678', 'Lille', 2),
+('Madame', 'Garcia', 'Sophia', '987 boulevard des Roses, Nice', '2001-06-22', '7890123456789', 'Nice', 3),
+('Monsieur', 'Martin', 'Thierry', '456 chemin des Étoiles, Lyon', '1976-09-30', '8901234567890', 'Lyon', 4);
 
 -- Création de la table consultation
 CREATE TABLE consultation (
@@ -53,6 +60,10 @@ INSERT INTO consultation (ID_USAGER, ID_Medecin, Date_Consultation, Heure, Duree
 (2, 2, '2023-12-01', '09:00', 30),
 (3, 3, '2023-12-01', '10:00', 30),
 (4, 4, '2023-12-01', '11:00', 30);
+(5, 1, '2023-12-02', '14:30', 45),
+(6, 2, '2023-12-02', '15:30', 45),
+(7, 3, '2023-12-03', '10:30', 30),
+(8, 4, '2023-12-03', '11:30', 30);
 
 -- Création de la table utilisateurs
 CREATE TABLE utilisateurs (

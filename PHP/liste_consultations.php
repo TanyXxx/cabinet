@@ -1,12 +1,14 @@
+
 <?php
 include 'BD.php';
 
 // Récupérer l'ID du médecin sélectionné si présent
 $medecinSelectionne = isset($_GET['medecin']) ? $_GET['medecin'] : '';
 
+
 // Afficher le menu déroulant pour sélectionner un médecin
-echo "<form action='' method='get'>";
-echo "Filtrer par médecin: <select name='medecin' onchange='this.form.submit()'>";
+echo "<form class='form-consultation' action='' method='get'>";
+echo "Filtrer par médecin: <select class='select-consultation' name='medecin' onchange='this.form.submit()'>";
 echo "<option value=''>Tous les médecins</option>";
 
 // Générer les options pour le menu déroulant
@@ -60,4 +62,5 @@ if ($stmt->rowCount() > 0) {
         <?php
         echo "<button class='btn-ajouter-consultation'onclick=\"window.location.href='saisir_consultation.php'\">Ajouter Consultation</button>";}
         ?>
+</div>
 </div>

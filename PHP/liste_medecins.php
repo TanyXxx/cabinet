@@ -7,11 +7,10 @@ try {
 
     if ($stmt->rowCount() > 0) {
         echo "<table>";
-        echo "<tr><th>ID</th><th>Civilité</th><th>Nom</th><th>Prénom</th><th>Actions</th></tr>";
+        echo "<tr><th>Civilité</th><th>Nom</th><th>Prénom</th><th>Actions</th></tr>";
 
         while ($row = $stmt->fetch()) {
             echo "<tr>";
-            echo "<td>" . htmlspecialchars($row['ID_Medecin']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Civilite']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Nom']) . "</td>";
             echo "<td>" . htmlspecialchars($row['Prenom']) . "</td>";
@@ -20,9 +19,13 @@ try {
         }
 
         echo "</table>";
-    } else {
-        echo "Aucun médecin trouvé.";
-    }
+        ?>
+<div class="div-btn-liste-consultation">    
+        <?php
+        echo "<button class='btn-ajouter-consultation'onclick=\"window.location.href='ajouter_medecin.php'\">Ajouter Medecin</button>";}
+        ?>
+</div>
+<?php
 } catch (PDOException $e) {
     die("Erreur : " . $e->getMessage());
 }

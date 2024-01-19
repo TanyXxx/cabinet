@@ -1,12 +1,14 @@
+
 <?php
 include 'BD.php';
 
 // Récupérer l'ID du médecin sélectionné si présent
 $medecinSelectionne = isset($_GET['medecin']) ? $_GET['medecin'] : '';
 
+
 // Afficher le menu déroulant pour sélectionner un médecin
-echo "<form action='' method='get'>";
-echo "Filtrer par médecin: <select name='medecin' onchange='this.form.submit()'>";
+echo "<form class='form-consultation' action='' method='get'>";
+echo "Filtrer par médecin: <select class='select-consultation' name='medecin' onchange='this.form.submit()'>";
 echo "<option value=''>Tous les médecins</option>";
 
 // Générer les options pour le menu déroulant
@@ -41,11 +43,10 @@ $stmt->execute();
 // Afficher les résultats
 if ($stmt->rowCount() > 0) {
     echo "<table>";
-    echo "<tr><th>ID</th><th>Usager</th><th>Médecin</th><th>Date de Consultation</th><th>Heure</th><th>Durée (minutes)</th><th>Actions</th></tr>";
+    echo "<tr><th>Usager</th><th>Médecin</th><th>Date de Consultation</th><th>Heure</th><th>Durée (minutes)</th><th>Actions</th></tr>";
 
     while ($row = $stmt->fetch()) {
         echo "<tr>";
-        echo "<td>" . htmlspecialchars($row['ID_Consultation']) . "</td>";
         echo "<td>" . htmlspecialchars($row['UsagerNom']) . " " . htmlspecialchars($row['UsagerPrenom']) . "</td>";
         echo "<td>" . htmlspecialchars($row['MedecinNom']) . " " . htmlspecialchars($row['MedecinPrenom']) . "</td>";
         echo "<td>" . htmlspecialchars($row['Date_Consultation']) . "</td>";
@@ -56,7 +57,10 @@ if ($stmt->rowCount() > 0) {
     }
 
     echo "</table>";
-} else {
-    echo "Aucune consultation trouvée.";
-}
-?>
+    ?>
+    <div class="div-btn-liste-consultation">    
+        <?php
+        echo "<button class='btn-ajouter-consultation'onclick=\"window.location.href='saisir_consultation.php'\">Ajouter Consultation</button>";}
+        ?>
+</div>
+</div>

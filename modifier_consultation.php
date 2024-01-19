@@ -1,10 +1,5 @@
+<?php include 'php/session.php'?>
 <?php
-session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
 include 'php/BD.php';
 
 if (isset($_GET['id'])) {

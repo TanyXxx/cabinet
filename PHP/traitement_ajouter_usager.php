@@ -26,6 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $stmt->execute();
         echo "Usager ajouté avec succès.";
+
+        // Redirection vers afficher_usagers.php
+        header("Location: ../afficher_usagers.php");
+        exit(); // Assurez-vous d'ajouter exit() après la redirection pour terminer l'exécution du script.
+        
     } catch (PDOException $e) {
         die("Erreur : " . $e->getMessage());
     }

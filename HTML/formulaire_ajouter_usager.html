@@ -1,18 +1,31 @@
-    <form method="post" action="php/traitement_ajouter_usager.php">
-        Civilité:
-        <select name="civilite">
-            <option value="Madame">Madame</option>
-            <option value="Monsieur">Monsieur</option>
-        </select><br><br>
-        Nom: <input type="text" name="nom" required>
-        Prénom: <input type="text" name="prenom" required>
-        Adresse: <input type="text" name="adresse" required>
-        Lieu de Naissance: <input type="text" name="lieu_naissance" required>
-        Date de Naissance: <input type="date" name="date_naissance" required>
-        Numéro de Sécurité Sociale: <input type="text" name="numero_secu" pattern="\d{13}" title="Le numéro de sécurité sociale doit contenir 13 chiffres" required>
-        Médecin référent:
-        <select name="medecin_ref">
-            <?php include 'php/generer_liste_medecins.php'; ?>
-        </select><br><br>
-        <input type="submit" value="Ajouter">
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div>
+        <form method="post" action="php/traitement_ajouter_usager.php">
+            Civilité:
+            <select name="civilite">
+                <option value="Madame">Madame</option>
+                <option value="Monsieur">Monsieur</option>
+            </select><br><br>
+            Nom: <input type="text" name="nom" required>
+            Prénom: <input type="text" name="prenom" required>
+            Adresse: <input type="text" name="adresse" required>
+            Lieu de Naissance: <input type="text" name="lieu_naissance" required>
+            Date de Naissance: <input type="date" name="date_naissance" required>
+            Numéro de Sécurité Sociale: <input class="input-form-numsecu" type="text" name="numero_secu" pattern="\d{13}" title="Le numéro de sécurité sociale doit contenir 13 chiffres" required>
+            Médecin référent:
+            <select name="medecin_ref">
+            </div>
+                <?php include 'php/generer_liste_medecins.php'; ?>
+            </select><br><br>
+            <input class="input-ajouterusager" type="submit" value="Ajouter">
+            
+        </form>
+     
+</body>
+</html>

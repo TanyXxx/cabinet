@@ -46,4 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "Aucune donnée reçue.";
 }
+        // Ajout du script JavaScript pour la redirection
+        echo "<script>
+                setTimeout(function() {
+                    window.location.href = '../afficher_consultations.php';
+                }, 3000);
+              </script>";
 ?>
+

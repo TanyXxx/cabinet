@@ -16,6 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $stmt->execute();
         echo "Médecin ajouté avec succès.";
+
+        // Ajout du script JavaScript pour la redirection
+        echo "<script>
+                setTimeout(function() {
+                    window.location.href = '../afficher_medecins.php';
+                }, 3000);
+              </script>";
     } catch (PDOException $e) {
         die("Erreur : " . $e->getMessage());
     }

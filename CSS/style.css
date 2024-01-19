@@ -1,16 +1,180 @@
-body {
-    font-family: Arial, sans-serif;
+/*Page d'accueil*/
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
+
+.h1-index{
+    
+    font-family: "Prata", sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.body-index {
+    display: flex;
+    height: 100vh;
+    font-family: "Prata", sans-serif;
     background-color: #f4f4f4;
     padding: 20px;
 }
 
+
+.image-index{
+    margin-left: 25em;
+    width: 50%;
+    height: 75vh;
+    border: 2px solid;
+}
+
+.image-index img{
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Formulaire saisir-consultation*/
+
+
+.container-saisir-consultation {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.form-saisir-consultation {
+    justify-content: center;
+    max-width: 510px;
+    margin-top: 50px;
+    display: grid;
+    gap: 10px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+}
+
+.form-saisir-consultation div {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+}
+
+label {
+    font-weight: bold;
+}
+
+select,
+input {
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    display: flex;
+    justify-content: center;
+    background-color: lightblue;
+    color: gray;
+    cursor: pointer;
+    border: none;
+    padding: 10px;
+}
+
+input[type="submit"]:hover {
+    background-color: #87cefa;
+}
+
+.btnsubmit {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-submit-saisirconsultation {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+
+/*Ajouter usager*/
+
+
+
+.btn-ajouter-usager{
+    font-family: "Prata", sans-serif;
+    font-size: 20px;
+    margin-bottom: 100px;
+}
+
+.div-btn-ajouter-usager{
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+.input-ajouterusager{
+    background-color: lightblue;
+}
+/*Ajouter consultation*/
+
+
+.container-container{
+    display: flex;
+    justify-content: center;
+}
+
+.div-btn-liste-consultation{
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+
+.btn-ajouter-consultation{
+    font-family: "Prata", sans-serif;
+    font-size: 20px;
+}
+
+.form-consultation{
+    padding: 1em;
+    font-family: "Prata", sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+.select-consultation{
+    margin-left: 1em;
+}
+
+.img-container{
+       max-width: 250px;
+       max-height: 250px;
+}
+
+.img-container img{
+    width: 100%;
+    height: 100%;
+
+}
+
+.btn-submit-template{
+    gap: 20px;
+}
+
+
+/*Autres*/
+
+
 table {
+    font-family: "Prata", sans-serif;
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
 table, th, td {
+    font-family: "Prata", sans-serif;
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
@@ -35,4 +199,39 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.test{
+    display: flex;
+}
+
+
+
+
+.body-afficher-consultation{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.body-afficher-medecin{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.body-afficher-usagers  {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.body-afficher-statistiques{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }

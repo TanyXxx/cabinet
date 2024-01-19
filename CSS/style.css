@@ -104,6 +104,7 @@ input[type="submit"]:hover {
 .btn-ajouter-usager{
     font-family: "Prata", sans-serif;
     font-size: 20px;
+    margin-bottom: 100px;
 }
 
 .div-btn-ajouter-usager{

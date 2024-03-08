@@ -1,0 +1,520 @@
+{
+	"info": {
+		"_postman_id": "0feff27f-de4c-4aef-91b5-7956ccad38e8",
+		"name": "NumEquipe NOM1-NOM2",
+		"description": "### **R4.01 : Gestion des consultations d'un cabinet médical avec contrôle d'accès.**\n\n2 APIS vont être nécessaires :\n\n**\\- AppMed** : API de gestions des ressources suivantes :\n\n- Médecin\n    \n- Patient\n    \n- Consultation\n    \n- Statistiques\n    \n\n**\\- AuthAPI** : API d'authentification indépendante de AppMed mais AppMed utilisera le format des jetons pour contrôles l'accès à ses ressources.\n\nPour faciliter l'évaluation des correcteurs, vous devrez obligatoirement automatiser la gestion du jeton afin que les correcteurs n'est pas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20008260",
+		"_collection_link": "https://orange-zodiac-772299.postman.co/workspace/R401-Mini-Projet~36f23962-b66a-43a0-b481-551764769113/collection/20008260-0feff27f-de4c-4aef-91b5-7956ccad38e8?action=share&source=collection_link&creator=20008260"
+	},
+	"item": [
+		{
+			"name": "AppMed",
+			"item": [
+				{
+					"name": "GestionMédecins",
+					"item": [
+						{
+							"name": "Créer un médecin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"civilite\":\"M.\",\r\n    \"nom\":\"Dupond\",\r\n    \"prenom\":\"Gérard\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/medecin",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"medecin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les médecins",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Modifier un médecin (id)",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nom\":\"Martin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/medecins/1",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"medecins",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir un médecin (id)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/medecins/1",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"medecins",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Supprimer un médecin (id)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/medecins/1",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"medecins",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GestionPatients",
+					"item": [
+						{
+							"name": "Créer un usager",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"civilite\":\"M.\",\r\n    \"nom\":\"Dumond\",\r\n    \"prenom\":\"Armand\",\r\n    \"sexe\":\"H\",\r\n    \"adresse\":\"85, Square de la Couronne\",\r\n    \"code_postal\":\"91120\",\r\n    \"ville\":\"Palaiseau\",\r\n    \"date_nais\":\"14/05/1952\",\r\n    \"lieu_nais\":\"Nantes\",\r\n    \"num_secu\":\"112233445566778\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/usagers",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"usagers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir tous les usagers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/usagers",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"usagers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modifier un usager (id)",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"adresse\":\"85, Square de la Couronne\",\r\n    \"code_postal\":\"91120\",\r\n    \"ville\":\"Palaiseau\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/usagers/2",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"usagers",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir un usager (id)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/usagers/2",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"usagers",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Supprimer un usager (id)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/usagers/2",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"usagers",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GestionConsultations",
+					"item": [
+						{
+							"name": "Créer une consultation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_usager\":\"2\",\r\n    \"id_medecin\":\"8\",\r\n    \"date_consult\":\"12/10/24\",\r\n    \"heure_consult\":\"11:30\",\r\n    \"duree_consult\":\"30\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/consultations",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"consultations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir toutes les consultations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/consultations",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"consultations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Modifier une consultation (id)",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id_usager\":\"2\",\r\n    \"id_medecin\":\"8\",\r\n    \"date_consult\":\"12/10/24\",\r\n    \"heure_consult\":\"12:30\",\r\n    \"duree_consult\":\"45\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/consultations/6",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"consultations",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtenir une consultation (id)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/consultations/6",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"consultations",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Supprimer une consultation (id)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url_app_med}}/consultations/6",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"consultations",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Statistiques",
+					"item": [
+						{
+							"name": "Stats médecins",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/stats/medecins",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"stats",
+										"medecins"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Stats usagers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url_app_med}}/stats/usagers",
+									"host": [
+										"{{url_app_med}}"
+									],
+									"path": [
+										"stats",
+										"usagers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"if (pm.environment.get(\"use_auth\") === \"true\") {",
+							"    pm.request.headers.add({",
+							"        key: 'Authorization',",
+							"        value: 'Bearer ' + pm.environment.get(\"token\")",
+							"    });",
+							"} else {",
+							"    pm.request.headers.remove('Authorization');",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "AuthAPI",
+			"item": [
+				{
+					"name": "Demande authentification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\":\"secretaire1\",\r\n    \"mdp\":\"password1234!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_auth}}",
+							"host": [
+								"{{url_auth}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Demande validation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url_auth}}",
+							"host": [
+								"{{url_auth}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url_auth",
+			"value": "http://localhost/authapi",
+			"type": "string"
+		},
+		{
+			"key": "url_app",
+			"value": "http://localhost/cabmed",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

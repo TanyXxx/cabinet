@@ -83,15 +83,15 @@ function get_bearer_token() {
 function verify_user($login, $password) {
     global $conn;
     
-    // Requête pour obtenir l'utilisateur par login
-    $stmt = $conn->prepare("SELECT * FROM user WHERE login = :login");
-    $stmt->bindParam(':login', $login);
+    // Requête pour obtenir l'utilisateur par NomUtilisateur
+    $stmt = $conn->prepare("SELECT * FROM utilisateurs WHERE NomUtilisateur = :NomUtilisateur");
+    $stmt->bindParam(':NomUtilisateur', $login);
     $stmt->execute();
     
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
     // Vérifiez si l'utilisateur existe et que le mot de passe est correct
-    if ($user && password_verify($password, $user['password'])) {
+    if ($user && password_verify($password, $user['MotDePasse'])) {
         return $user; // Retournez les informations de l'utilisateur si le mot de passe est correct
     } else {
         return false; // Retournez false si l'utilisateur n'existe pas ou si le mot de passe est incorrect

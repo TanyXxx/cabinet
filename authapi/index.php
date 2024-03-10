@@ -16,6 +16,7 @@ switch ($method) {
 
         if ($jwt && is_jwt_valid($jwt, 'your_secret_key')) {
             $payload = json_decode(base64url_decode(explode('.', $jwt)[1]), true);
+            echo json_encode(['message' => 'Accès autorisé. Le jeton JWT est valide.', 'payload' => $payload]);
         } else {
             http_response_code(401);
             echo json_encode(['error' => 'Accès non autorisé. Jeton invalide ou manquant.']);
@@ -26,7 +27,7 @@ switch ($method) {
         // Récupération du login et mot de passe depuis les données reçues
         $input = json_decode(file_get_contents('php://input'), true);
         $login = $input['login'] ?? '';
-        $password = $input['password'] ?? '';
+        $password = $input['mdp'] ?? '';;
 
         // Vérifier l'utilisateur dans la base de données
         $user = verify_user($login, $password);
@@ -35,10 +36,10 @@ switch ($method) {
             // L'utilisateur est valide, générer et renvoyer un JWT
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
             $payload = [
-                'login' => $user['login'],
-                'role' => $user['role'],
+                'login' => $user['NomUtilisateur'], 
+                'role' => $user['Role'], 
                 'exp' => (time() + 60 * 60) // Expiration après 1 heure
-            ]; 
+            ];             
             $jwt = generate_jwt($headers, $payload, 'your_secret_key'); 
 
             echo json_encode(['jwt' => $jwt]);

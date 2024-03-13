@@ -1,0 +1,30 @@
+<form method="post" action="PHP/traitement_ajouter_usager.php">
+    Civilité:
+    <select name="civilite">
+        <option value="Madame">Madame</option>
+        <option value="Monsieur">Monsieur</option>
+    </select><br><br>
+
+    Sexe: 
+    <select name="sexe">
+        <option value="H">Homme</option>
+        <option value="F">Femme</option>
+        <option value="N">Non binaire</option>
+        <option value="A">Autre</option>
+        <option value="X">Préfère ne pas dire</option>
+    </select><br><br>
+
+    Nom: <input type="text" name="nom" required><br><br>
+    Prénom: <input type="text" name="prenom" required><br><br>
+    Adresse: <input type="text" name="adresse" required><br><br>
+    Code Postal: <input type="text" name="code_postal" required><br><br>
+    Ville: <input type="text" name="ville" required><br><br>
+    Lieu de Naissance: <input type="text" name="lieu_naissance" required><br><br>
+    Date de Naissance: <input type="date" name="date_naissance" required><br><br>
+    Numéro de Sécurité Sociale: <input class="input-form-numsecu" type="text" name="numero_secu" pattern="\d{13}" title="Le numéro de sécurité sociale doit contenir 13 chiffres" required><br><br>
+    Médecin référent:
+    <select name="medecin_ref">
+        <?php include 'PHP/generer_liste_medecins.php'; ?>
+    </select><br><br>
+    <input class="input-ajouterusager" type="submit" value="Ajouter">
+</form>

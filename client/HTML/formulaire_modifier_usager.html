@@ -1,0 +1,47 @@
+<form method="post" action="PHP/traitement_modifier_usager.php">
+    <input type="hidden" name="id"
+        value="<?php echo isset($usager['ID_USAGER']) ? htmlspecialchars($usager['ID_USAGER']) : ''; ?>">
+    Civilité:
+    <select name="civilite">
+        <option value="Madame" <?php echo (isset($usager['Civilite']) && $usager['Civilite']=='Madame' ) ? 'selected'
+            : '' ; ?>>Madame</option>
+        <option value="Monsieur" <?php echo (isset($usager['Civilite']) && $usager['Civilite']=='Monsieur' )
+            ? 'selected' : '' ; ?>>Monsieur</option>
+    </select><br><br>
+
+    Sexe:
+    <select name="sexe">
+        <option value="H" <?php echo (isset($usager['Sexe']) && $usager['Sexe']=='H' ) ? 'selected' : '' ; ?>>Homme
+        </option>
+        <option value="F" <?php echo (isset($usager['Sexe']) && $usager['Sexe']=='F' ) ? 'selected' : '' ; ?>>Femme
+        </option>
+        <option value="N" <?php echo (isset($usager['Sexe']) && $usager['Sexe']=='N' ) ? 'selected' : '' ; ?>>Non
+            binaire</option>
+        <option value="A" <?php echo (isset($usager['Sexe']) && $usager['Sexe']=='A' ) ? 'selected' : '' ; ?>>Autre
+        </option>
+        <option value="X" <?php echo (isset($usager['Sexe']) && $usager['Sexe']=='X' ) ? 'selected' : '' ; ?>>Préfère ne
+            pas dire</option>
+    </select><br><br>
+
+    Nom: <input type="text" name="nom"
+        value="<?php echo isset($usager['Nom']) ? htmlspecialchars($usager['Nom']) : ''; ?>" required><br><br>
+    Prénom: <input type="text" name="prenom"
+        value="<?php echo isset($usager['Prenom']) ? htmlspecialchars($usager['Prenom']) : ''; ?>" required><br><br>
+    Adresse: <input type="text" name="adresse"
+        value="<?php echo isset($usager['Adresse']) ? htmlspecialchars($usager['Adresse']) : ''; ?>" required><br><br>
+    Code Postal: <input type="text" name="code_postal"
+        value="<?php echo isset($usager['Code_Postal']) ? htmlspecialchars($usager['Code_Postal']) : ''; ?>"
+        required><br><br>
+    Ville: <input type="text" name="ville"
+        value="<?php echo isset($usager['Ville']) ? htmlspecialchars($usager['Ville']) : ''; ?>" required><br><br>
+    Lieu de Naissance: <input type="text" name="lieu_naissance"
+        value="<?php echo isset($usager['Lieu_Naissance']) ? htmlspecialchars($usager['Lieu_Naissance']) : ''; ?>"
+        required><br><br>
+    Date de Naissance: <input type="date" name="date_naissance"
+        value="<?php echo isset($usager['Date_Naissance']) ? htmlspecialchars($usager['Date_Naissance']) : ''; ?>"
+        required><br><br>
+    Numéro de Sécurité Sociale: <input type="text" name="numero_secu" pattern="\d{13}"
+        value="<?php echo isset($usager['Numero_Secu']) ? htmlspecialchars($usager['Numero_Secu']) : ''; ?>"
+        title="Le numéro de sécurité sociale doit contenir 13 chiffres" required><br><br>
+    <input type="submit" value="Modifier">
+</form>

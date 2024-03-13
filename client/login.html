@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="CSS/login.css">
+</head>
+
+<body>
+    <div class="login-container" id="loginContainer">
+        <form id="loginForm">
+            <h2>Connexion</h2>
+            <div class="error-message" id="errorMessage"></div>
+            <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required>
+            <input type="password" id="password" name="password" placeholder="Mot de passe" required>
+            <input type="submit" value="Se connecter">
+        </form>        
+    </div>
+    <script src="JS/authentification.js"></script>
+    <!-- Ce fichier doit maintenant uniquement contenir la logique de soumission du formulaire -->
+</body>
+
+</html>

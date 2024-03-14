@@ -1,0 +1,20 @@
+RewriteEngine On
+
+# Réécriture pour l'API medecins
+RewriteRule ^medecins$ medecin/index.php [NC,L]
+RewriteRule ^medecins/([0-9]+)$ medecin/index.php?id=$1 [NC,L]
+
+# Réécriture pour l'API usagers
+RewriteRule ^usagers$ usagers/index.php [NC,L]
+RewriteRule ^usagers/([0-9]+)$ usagers/index.php?id=$1 [NC,L]
+
+# Réécriture pour l'API consultations
+RewriteRule ^consultations$ consultations/index.php [NC,L]
+RewriteRule ^consultations/([0-9]+)$ consultations/index.php?id=$1 [NC,L]
+
+# Réécriture pour l'API stats
+RewriteRule ^stats/medecins$ statistiques/index.php?type=medecins [NC,L]
+RewriteRule ^stats/usagers$ statistiques/index.php?type=usagers [NC,L]
+
+# Réécriture pour l'API auth
+RewriteRule ^auth$ authapi/index.php [NC,L]

@@ -6,39 +6,38 @@ header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE');
 header('Content-Type: application/json');
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
-$id = isset($_GET['id']) ? (int) $_GET['id'] : null; // For GET, PATCH, DELETE to specify which consultation
-$input = json_decode(file_get_contents('php://input'), true); // For POST and PATCH
+$id = isset($_GET['id']) ? (int) $_GET['id'] : null; 
+$input = json_decode(file_get_contents('php://input'), true); 
 
 switch ($requestMethod) {
     case 'GET':
         if ($id !== null) {
-            $response = getConsultationById($id);
+            getConsultationById($id); 
         } else {
-            $response = getAllConsultations();
+            getAllConsultations(); 
         }
         break;
     case 'POST':
-        $response = addConsultation($input);
+        addConsultation($input); 
         break;
     case 'PATCH':
         if ($id !== null) {
-            $response = updateConsultation($id, $input);
-        } else {
-            $response = json_encode(["error" => "ID de la consultation est requis pour PATCH."]);
+            updateConsultation($id, $input); 
+        }
+        else {
+            deliver_response(400, "ID de la consultation est requis pour PATCH.");
         }
         break;
     case 'DELETE':
         if ($id !== null) {
-            $response = deleteConsultation($id);
+            deleteConsultation($id); 
         } else {
-            $response = json_encode(["error" => "ID de la consultation est requis pour DELETE."]);
+            deliver_response(400, "ID de la consultation est requis pour DELETE.");
         }
         break;
     default:
-        http_response_code(405);
-        $response = json_encode(['error' => 'Method Not Allowed']);
+        deliver_response(405, 'Method Not Allowed');
         break;
 }
 
-echo json_encode($response);
-?>
+

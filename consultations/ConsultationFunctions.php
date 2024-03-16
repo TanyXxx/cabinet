@@ -1,23 +1,58 @@
 <?php
 require_once '../connexionDB.php'; 
 
+function deliver_response($status_code, $status_message, $data = null)
+{
+    http_response_code($status_code);
+    header("Content-Type:application/json; charset=utf-8");
+
+    $status_phrases = [
+        200 => 'OK',
+        201 => 'Created',
+        400 => 'Bad Request',
+        404 => 'Not Found',
+        500 => 'Internal Server Error',
+    ];
+
+    $response = [
+        'status_code' => $status_code,
+        'status' => isset($status_phrases[$status_code]) ? $status_phrases[$status_code] : 'Unknown Status',
+        'status_message' => $status_message,
+        'data' => $data,
+    ];
+
+    $json_response = json_encode($response, JSON_UNESCAPED_UNICODE);
+    if ($json_response === false) {
+        die('json encode ERROR : ' . json_last_error_msg());
+    }
+
+    echo $json_response;
+}
+
 function addConsultation($data) {
     global $conn;
     $sql = "INSERT INTO consultation (ID_USAGER, ID_Medecin, Date_Consultation, Heure, Duree) VALUES (:id_usager, :id_medecin, :date_consult, :heure_consult, :duree_consult)";
+
     try {
         $stmt = $conn->prepare($sql);
-        $stmt->execute([
+        $success = $stmt->execute([
             ':id_usager' => $data['id_usager'],
             ':id_medecin' => $data['id_medecin'],
             ':date_consult' => $data['date_consult'],
             ':heure_consult' => $data['heure_consult'],
             ':duree_consult' => $data['duree_consult']
         ]);
-        return "Consultation créée avec succès.";
+
+        if ($success) {
+            deliver_response(201, "Consultation créée avec succès", ['id' => $conn->lastInsertId()]);
+        } else {
+            deliver_response(400, "Erreur lors de la création de la consultation");
+        }
     } catch (PDOException $e) {
-        return "Erreur : " . $e->getMessage();
+        deliver_response(500, "Erreur : " . $e->getMessage());
     }
 }
+
 
 function getAllConsultations() {
     global $conn;
@@ -25,9 +60,10 @@ function getAllConsultations() {
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        deliver_response(200, "OK", $result);
     } catch (PDOException $e) {
-        return "Erreur : " . $e->getMessage();
+        deliver_response(500, "Erreur : " . $e->getMessage());
     }
 }
 
@@ -38,15 +74,19 @@ function getConsultationById($id) {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            deliver_response(200, "OK", $result);
+        } else {
+            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.");
+        }
     } catch (PDOException $e) {
-        return "Erreur : " . $e->getMessage();
+        deliver_response(500, "Erreur : " . $e->getMessage());
     }
 }
 
 function updateConsultation($id, $data) {
     global $conn;
-    // Map the request fields to the actual database columns
     $columnMappings = [
         'id_usager' => 'ID_USAGER',
         'id_medecin' => 'ID_Medecin',
@@ -55,13 +95,21 @@ function updateConsultation($id, $data) {
         'duree_consult' => 'Duree'
     ];
 
+    $existSql = "SELECT 1 FROM consultation WHERE ID_Consultation = :id";
+    $existStmt = $conn->prepare($existSql);
+    $existStmt->execute([':id' => $id]);
+    if ($existStmt->fetchColumn() === false) {
+        deliver_response(404, "Consultation non trouvée avec l'ID spécifié.");
+        return;
+    }
+
     $sql = "UPDATE consultation SET ";
     $params = [];
     foreach ($data as $key => $value) {
         if (isset($columnMappings[$key])) {
             $dbColumn = $columnMappings[$key];
-            $sql .= "$dbColumn = :$dbColumn, ";
-            $params[":$dbColumn"] = $value;
+            $sql .= "$dbColumn = :$key, ";
+            $params[":$key"] = $value;
         }
     }
     $sql = rtrim($sql, ', ');
@@ -70,19 +118,20 @@ function updateConsultation($id, $data) {
 
     try {
         $stmt = $conn->prepare($sql);
-        $stmt->execute($params);
-        if ($stmt->rowCount() > 0) {
-            return "Consultation mise à jour avec succès.";
+        $success = $stmt->execute($params);
+        $affectedRows = $stmt->rowCount();
+
+        if ($success && $affectedRows > 0) {
+            deliver_response(200, "Consultation mise à jour avec succès.");
+        } elseif ($success && $affectedRows === 0) {
+            deliver_response(400, "Aucune modification apportée. Les données fournies sont peut-être identiques aux données existantes.");
         } else {
-            // This condition is specifically for when no rows are affected
-            return "Aucune mise à jour effectuée. Vérifiez que l'ID est correct et que les données diffèrent des valeurs actuelles.";
+            deliver_response(500, "Erreur lors de la mise à jour de la consultation.");
         }
     } catch (PDOException $e) {
-        return "Erreur : " . $e->getMessage();
+        deliver_response(500, "Erreur lors de la mise à jour de la consultation: " . $e->getMessage());
     }
 }
-
-
 
 
 function deleteConsultation($id) {
@@ -91,17 +140,13 @@ function deleteConsultation($id) {
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        if ($stmt->execute()) {
-            if ($stmt->rowCount() > 0) {
-                return "Consultation supprimée avec succès.";
-            } else {
-                return "Aucune consultation trouvée avec l'ID spécifié.";
-            }
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            deliver_response(200, "Consultation supprimée avec succès.");
         } else {
-            return "Erreur lors de la tentative de suppression.";
+            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.");
         }
     } catch (PDOException $e) {
-        return "Erreur : " . $e->getMessage();
+        deliver_response(500, "Erreur : " . $e->getMessage());
     }
 }
-?>

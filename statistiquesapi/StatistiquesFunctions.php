@@ -1,5 +1,5 @@
 <?php
-require_once '../connexionDB.php';
+require_once '../BD/connexionDB.php';
 
 function getStatistiquesUsagers() {
     global $conn;

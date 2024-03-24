@@ -1,7 +1,7 @@
 <?php
-$servername = "mysql-soltanhamadouche.alwaysdata.net";
-$dbname = "soltanhamadouche_cabinet";
-$username = "344167_etu";
+$servername = "mysql-noahbeugnet.alwaysdata.net";
+$dbname = "noahbeugnet_cabinetauth";
+$username = "352917_etu";
 $password = "iutinfo";
 
 try {

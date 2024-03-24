@@ -1,5 +1,5 @@
 <?php
-require_once 'connexionDB.php'; // Assurez-vous que cela pointe vers votre fichier de connexion
+require_once 'connexionDBauth.php'; // Assurez-vous que cela pointe vers votre fichier de connexion
 
 $stmt = $conn->query("SELECT ID_Utilisateur, MotDePasse FROM utilisateurs");
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -1,5 +1,5 @@
 <?php
-require_once 'connexionDB.php';
+require_once 'connexionDBauth.php';
 require_once 'jwt_utils.php';
 
 header('Access-Control-Allow-Origin: *');

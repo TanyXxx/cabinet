@@ -125,7 +125,8 @@ function addUsager($data) {
     $ville = isset($data['ville']) ? $data['ville'] : null;
     $lieu_nais = isset($data['lieu_nais']) ? $data['lieu_nais'] : null;
     $num_secu = isset($data['num_secu']) ? $data['num_secu'] : null;
-    $id_medecin_ref = isset($data['id_medecin_ref']) ? $data['id_medecin_ref'] : null;
+    $id_medecin_ref = isset($data['id_medecin']) ? $data['id_medecin'] : null;
+
 
     // Préparation de la requête SQL
     $sql = "INSERT INTO usager (

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Consultations - Gestion Cabinet Médical</title>
+</head>
+<link rel="icon" type="image/png" href="../Image/favicon.jpg">
+<link rel="stylesheet" type="text/css" href="../CSS/style.css">
+<link rel="stylesheet" type="text/css" href="../CSS/menu.css">
+<link rel="stylesheet" type="text/css" href="../CSS/tableau.css">
+<link rel="stylesheet" type="text/css" href="../CSS/footer.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<body>
+    <div id="menuContainer"></div>
+    <h1>Liste des Consultations</h1>
+    <label for="filterByDoctor">Filtrer par médecin:</label>
+    <select id="filterByDoctor" onchange="filterConsultationsByDoctor()">
+        <option value="">Tous les médecins</option>
+    </select>
+    <div id="consultationsContainer"></div>
+    <div class="div-btn-ajouter-consultation">
+        <button class='btn btn-primary' data-toggle="modal" data-target="#addConsultationModal">Ajouter une
+            consultation</button>
+    </div>
+    <div id="modalModifConsultation"></div>
+    <div id="modalAjouterConsultation"></div>
+    <div id="footerContainer"></div>
+    <script src="../JS/auth.js" defer></script>
+    <script src="../JS/afficher_consultations.js" defer></script>
+    <script src="../JS/includemenu.js" defer></script>
+    <script src="../JS/includefooter.js" defer></script>
+    <script src="../JS/includemodalmodifconsultation.js" defer></script>
+    <script src="../JS/includemodalajouterconsultation.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -11,6 +11,7 @@ RewriteRule ^usagers/([0-9]+)$ usagersapi/index.php?id=$1 [NC,L]
 # Réécriture pour l'API consultations
 RewriteRule ^consultations$ consultationsapi/index.php [NC,L]
 RewriteRule ^consultations/([0-9]+)$ consultationsapi/index.php?id=$1 [NC,L]
+RewriteRule ^consultations/medecin/([0-9]+)$ consultationsapi/index.php?id_medecin=$1 [NC,L]
 
 # Réécriture pour l'API stats
 RewriteRule ^stats/medecins$ statistiquesapi/index.php?type=medecins [NC,L]

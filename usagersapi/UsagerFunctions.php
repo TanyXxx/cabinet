@@ -81,28 +81,6 @@ function getUsagerById($id)
     }
 }
 
-
-function getPrenomNomFromIDMedecinRef($idMedecinRef)
-{
-    global $conn;
-    $sql = "SELECT CONCAT(Civilite, ' ', Nom, ' ', Prenom) AS MedecinReferent FROM medecin WHERE ID_Medecin = :idMedecinRef";
-    try {
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':idMedecinRef', $idMedecinRef, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            return $result['MedecinReferent'];
-        } else {
-            return null; // ou renvoyer une valeur par défaut, par exemple 'Non assigné'
-        }
-    } catch (PDOException $e) {
-        error_log("Erreur lors de la récupération du médecin référent: " . $e->getMessage());
-        return null;
-    }
-}
-
 function addUsager($data) {
     global $conn;
 

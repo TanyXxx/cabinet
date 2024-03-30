@@ -1,0 +1,41 @@
+<!-- Modal Modification Médecin -->
+<div class="modal fade" id="editMedecinModal" tabindex="-1" aria-labelledby="editMedecinModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editMedecinModalLabel">Modifier Médecin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editMedecinForm">
+                    <input type="hidden" id="editIdMedecin" name="id">
+
+                    <div class="mb-3">
+                        <label for="editCiviliteMedecin" class="form-label">Civilité</label>
+                        <select id="editCiviliteMedecin" name="civilite" class="form-select" required>
+                            <option value="Mme.">Madame</option>
+                            <option value="M.">Monsieur</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editNomMedecin" class="form-label">Nom</label>
+                        <input type="text" id="editNomMedecin" name="nom" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editPrenomMedecin" class="form-label">Prénom</label>
+                        <input type="text" id="editPrenomMedecin" name="prenom" class="form-control" required>
+                    </div>
+                </form>
+                <div id="responseMessageMedecin" class="alert" role="alert" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="submit" form="editMedecinForm" class="btn btn-primary">Enregistrer les modifications</button>
+            </div>
+        </div>
+    </div>
+</div>

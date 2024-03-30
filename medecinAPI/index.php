@@ -1,5 +1,6 @@
 <?php
 require_once 'MedecinFunctions.php';
+require_once '../authapi/jwt_utils.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE');
@@ -8,6 +9,12 @@ header('Content-Type: application/json');
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $id = $_GET['id'] ?? null;
 $input = json_decode(file_get_contents('php://input'), true);
+$jwt = get_bearer_token();
+
+if (!$jwt || !is_jwt_valid($jwt, 'your_secret_key')) {
+    deliver_response(401, "Accès refusé, veuillez vous reconnectez", NULL);
+    exit();
+} 
 
 switch ($requestMethod) {
     case 'GET':

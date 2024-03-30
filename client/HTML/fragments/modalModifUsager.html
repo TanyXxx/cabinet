@@ -72,6 +72,12 @@
                         <input type="text" id="editNumeroSecu" name="numero_secu" class="form-control" pattern="\d{13}"
                             title="Le numéro de sécurité sociale doit contenir 13 chiffres" required>
                     </div>
+                    <div class="mb-3">
+                        <label for="editMedecinRef" class="form-label">Médecin Référent</label>
+                        <select id="editMedecinRef" name="medecin_ref" class="form-select" required>
+                            <!-- Dynamically loaded options will appear here -->
+                        </select>
+                    </div>                                       
                 </form>
                 <div id="responseMessage" class="alert" role="alert" style="display:none;"></div>
             </div>

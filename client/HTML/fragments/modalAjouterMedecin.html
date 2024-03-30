@@ -1,0 +1,41 @@
+<!-- Modal Ajouter Médecin -->
+<div class="modal fade" id="addMedecinModal" tabindex="-1" aria-labelledby="addMedecinModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMedecinModalLabel">Ajouter Médecin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addMedecinForm">
+                    <div class="mb-3">
+                        <label for="addCivilite" class="form-label">Civilité</label>
+                        <select id="addCivilite" name="civilite" class="form-select" required>
+                            <option value="Mme.">Madame</option>
+                            <option value="M.">Monsieur</option>
+                            <option value="N/A">Ne pas précisé</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="addNom" class="form-label">Nom</label>
+                        <input type="text" id="addNom" name="nom" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="addPrenom" class="form-label">Prénom</label>
+                        <input type="text" id="addPrenom" name="prenom" class="form-control" required>
+                    </div>
+
+                </form>
+                <div id="addMedecinResponseMessage" class="alert" role="alert" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" onclick="submitAddMedecinForm()">Ajouter</button>
+            </div>
+        </div>
+    </div>
+</div>

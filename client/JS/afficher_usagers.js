@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (addButton) {
         addButton.addEventListener('click', openAddModal);
     }
+    attachEventToEditForm();
+    fetchMedecinsForDropdown('addMedecinRef');
+    fetchMedecinsForDropdown('editMedecinRef');
 });
 
 function fetchUsagers() {
@@ -67,8 +70,7 @@ function displayUsagers(response) {
                 };
 
                 const deleteButton = document.createElement('a');
-                deleteButton.href = '#';
-                deleteButton.textContent = 'Supprimer';
+                deleteButton.href = deleteButton.textContent = 'Supprimer';
                 deleteButton.onclick = function () {
                     if (confirm('Êtes-vous sûr de vouloir supprimer cet usager?')) {
                         fetch(`http://localhost/cabinet/usagers/${usager.ID_USAGER}`, {
@@ -123,6 +125,7 @@ function fillEditModal(usager) {
         document.getElementById('editLieuNaissance').value = usager.Lieu_Naissance || '';
         document.getElementById('editDateNaissance').value = usager.Date_Naissance ? usager.Date_Naissance.substring(0, 10) : ''; // Assurez-vous de formater la date correctement.
         document.getElementById('editNumeroSecu').value = usager.Numero_Secu || '';
+        document.getElementById('editMedecinRef').value = usager.ID_Medecin_Ref || '';
 
         // Affichez le modal après avoir rempli les champs.
         var editModal = new bootstrap.Modal(document.getElementById('editUsagerModal'), {
@@ -179,10 +182,11 @@ function submitEditModalForm() {
         Date_Naissance: document.getElementById('editDateNaissance').value,
         Lieu_Naissance: document.getElementById('editLieuNaissance').value,
         Numero_Secu: document.getElementById('editNumeroSecu').value,
+        ID_Medecin_Ref: document.getElementById('editMedecinRef').value,
     };
 
     fetch(`http://localhost/cabinet/usagers/${usagerID}`, {
-        method: 'PATCH', // ou 'PUT'
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
@@ -246,6 +250,7 @@ function submitAddUsagerForm() {
         date_nais: formattedDate,
         lieu_nais: document.getElementById('addLieuNaissance').value,
         num_secu: document.getElementById('addNumeroSecu').value,
+        ID_Medecin_Ref: document.getElementById('addMedecinRef').value,
     };
 
    fetch('http://localhost/cabinet/usagers', {
@@ -283,4 +288,30 @@ function displayApiAddResponseMessage(message, type) {
     messageDiv.className = 'alert ' + (type === 'error' ? 'alert-danger' : 'alert-success');
     messageDiv.style.display = 'block'; // Assurez-vous que votre élément est visible
     setTimeout(() => { messageDiv.style.display = 'none'; }, 4000); // Cache le message après 4 secondes
+}
+
+
+function fetchMedecinsForDropdown(dropdownId) {
+    fetch('http://localhost/cabinet/medecins', {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status_code === 200 && Array.isArray(data.data)) {
+            const select = document.getElementById(dropdownId);
+            select.innerHTML = '<option value="">Sélectionnez un médecin référent</option>'; // Clear existing options and add a placeholder
+            data.data.forEach(medecin => {
+                const option = document.createElement('option');
+                option.value = medecin.ID_Medecin;
+                option.textContent = `${medecin.Civilite} ${medecin.Nom} ${medecin.Prenom}`;
+                select.appendChild(option);
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+    });
 }

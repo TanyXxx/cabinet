@@ -1,5 +1,6 @@
 <?php
 require_once '../BD/connexionDB.php'; 
+require_once '../authapi/jwt_utils.php';
 
 function deliver_response($status_code, $status_message, $data = null)
 {
@@ -56,12 +57,25 @@ function addConsultation($data) {
 
 function getAllConsultations() {
     global $conn;
-    $sql = "SELECT * FROM consultation";
+    $sql = "SELECT consultation.*, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom
+            FROM consultation
+            LEFT JOIN medecin ON consultation.ID_Medecin = medecin.ID_Medecin
+            LEFT JOIN usager ON consultation.ID_USAGER = usager.ID_USAGER";
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        deliver_response(200, "OK", $result);
+        $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $consultations = array_map(function($consultation) {
+            $medecin = trim($consultation['MedecinNom'] . ' ' . $consultation['MedecinPrenom']);
+            $usager = trim($consultation['UsagerNom'] . ' ' . $consultation['UsagerPrenom']);
+            $consultation['Medecin'] = $medecin ? $medecin : 'Non assigné';
+            $consultation['Usager'] = $usager ? $usager : 'Non assigné';
+            unset($consultation['MedecinNom'], $consultation['MedecinPrenom'], $consultation['UsagerNom'], $consultation['UsagerPrenom']);
+            return $consultation;
+        }, $consultations);
+
+        deliver_response(200, "OK", $consultations);
     } catch (PDOException $e) {
         deliver_response(500, "Erreur : " . $e->getMessage());
     }
@@ -69,17 +83,55 @@ function getAllConsultations() {
 
 function getConsultationById($id) {
     global $conn;
-    $sql = "SELECT * FROM consultation WHERE ID_Consultation = :id";
+    $sql = "SELECT consultation.*, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom
+            FROM consultation
+            LEFT JOIN medecin ON consultation.ID_Medecin = medecin.ID_Medecin
+            LEFT JOIN usager ON consultation.ID_USAGER = usager.ID_USAGER
+            WHERE consultation.ID_Consultation = :id";
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($result) {
-            deliver_response(200, "OK", $result);
+        $consultation = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($consultation) {
+            $medecin = trim($consultation['MedecinNom'] . ' ' . $consultation['MedecinPrenom']);
+            $usager = trim($consultation['UsagerNom'] . ' ' . $consultation['UsagerPrenom']);
+            $consultation['Medecin'] = $medecin ? $medecin : 'Non assigné';
+            $consultation['Usager'] = $usager ? $usager : 'Non assigné';
+            unset($consultation['MedecinNom'], $consultation['MedecinPrenom'], $consultation['UsagerNom'], $consultation['UsagerPrenom']);
+
+            deliver_response(200, "Consultation trouvée", $consultation);
         } else {
             deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.");
         }
+    } catch (PDOException $e) {
+        deliver_response(500, "Erreur : " . $e->getMessage());
+    }
+}
+
+function getConsultationsByMedecinId($id_medecin) {
+    global $conn;
+    $sql = "SELECT consultation.*, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom
+            FROM consultation
+            LEFT JOIN medecin ON consultation.ID_Medecin = medecin.ID_Medecin
+            LEFT JOIN usager ON consultation.ID_USAGER = usager.ID_USAGER
+            WHERE consultation.ID_Medecin = :id_medecin";
+    try {
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id_medecin', $id_medecin, PDO::PARAM_INT);
+        $stmt->execute();
+        $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $consultations = array_map(function($consultation) {
+            $medecin = trim($consultation['MedecinNom'] . ' ' . $consultation['MedecinPrenom']);
+            $usager = trim($consultation['UsagerNom'] . ' ' . $consultation['UsagerPrenom']);
+            $consultation['Medecin'] = $medecin ? $medecin : 'Non assigné';
+            $consultation['Usager'] = $usager ? $usager : 'Non assigné';
+            unset($consultation['MedecinNom'], $consultation['MedecinPrenom'], $consultation['UsagerNom'], $consultation['UsagerPrenom']);
+            return $consultation;
+        }, $consultations);
+
+        deliver_response(200, "OK", $consultations);
     } catch (PDOException $e) {
         deliver_response(500, "Erreur : " . $e->getMessage());
     }

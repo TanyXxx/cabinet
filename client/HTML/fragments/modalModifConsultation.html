@@ -1,0 +1,57 @@
+<!-- Modal Modification Consultation -->
+<div class="modal fade" id="editConsultationModal" tabindex="-1" aria-labelledby="editConsultationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editConsultationModalLabel">Modifier Consultation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editConsultationForm">
+                    <input type="hidden" id="editConsultationId" name="consultationId">
+                    <div class="mb-3">
+                        <label for="editConsultationUsager" class="form-label">Usager</label>
+                        <select id="editConsultationUsager" name="consultationUsager" class="form-select" required>
+                            <!-- Dynamically loaded options will appear here -->
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editConsultationMedecin" class="form-label">Médecin</label>
+                        <select id="editConsultationMedecin" name="consultationMedecin" class="form-select" required>
+                            <!-- Dynamically loaded options will appear here -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editConsultationDate" class="form-label">Date de la consultation</label>
+                        <input type="date" id="editConsultationDate" name="consultationDate" class="form-control"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editConsultationHeure" class="form-label">Heure de la consultation</label>
+                        <input type="time" id="editConsultationHeure" name="consultationHeure" class="form-control"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editConsultationDuree" class="form-label">Durée de la consultation (en
+                            minutes)</label>
+                        <input type="number" id="editConsultationDuree" name="consultationDuree" class="form-control"
+                            required>
+                    </div>
+
+                </form>
+                <div id="EditResponseMessage" class="alert" role="alert" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="submit" form="editConsultationForm" class="btn btn-primary">Enregistrer les
+                    modifications</button>
+            </div>
+        </div>
+    </div>
+</div>

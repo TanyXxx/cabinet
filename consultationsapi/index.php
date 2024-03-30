@@ -7,14 +7,22 @@ header('Content-Type: application/json');
 
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null; 
+$id_medecin = isset($_GET['id_medecin']) ? (int) $_GET['id_medecin'] : null;
 $input = json_decode(file_get_contents('php://input'), true); 
+$jwt = get_bearer_token();
 
+if (!$jwt || !is_jwt_valid($jwt, 'your_secret_key')) {
+    deliver_response(401, "Accès refusé, veuillez vous reconnectez", NULL);
+    exit();
+} 
 switch ($requestMethod) {
     case 'GET':
         if ($id !== null) {
-            getConsultationById($id); 
+            getConsultationById($id);
+        } elseif ($id_medecin !== null) {
+            getConsultationsByMedecinId($id_medecin);
         } else {
-            getAllConsultations(); 
+            getAllConsultations();
         }
         break;
     case 'POST':
@@ -39,5 +47,4 @@ switch ($requestMethod) {
         deliver_response(405, 'Method Not Allowed');
         break;
 }
-
 

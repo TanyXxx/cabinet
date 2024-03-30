@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Medecins - Gestion Cabinet Médical</title>
+</head>
+<link rel="icon" type="image/png" href="../Image/favicon.jpg">
+<link rel="stylesheet" type="text/css" href="../CSS/style.css">
+<link rel="stylesheet" type="text/css" href="../CSS/menu.css">
+<link rel="stylesheet" type="text/css" href="../CSS/tableau.css">
+<link rel="stylesheet" type="text/css" href="../CSS/footer.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<body>
+    <div id="menuContainer"></div>
+    <h1>Liste des Medecins</h1>
+    <div id="medecinsContainer"></div>
+    <div class="div-btn-ajouter-medecin">
+        <button class='btn btn-primary' data-toggle="modal" data-target="#addMedecinModal">Ajouter un medecin</button>
+    </div>
+    <div id="modalModifMedecin"></div>
+    <div id="modalAjouterMedecin"></div>
+    <div id="footerContainer"></div>
+    <script src="../JS/auth.js" defer></script>
+    <script src="../JS/afficher_medecins.js" defer></script>
+    <script src="../JS/includemenu.js" defer></script>
+    <script src="../JS/includefooter.js" defer></script>
+    <script src="../JS/includemodalmodifmedecin.js" defer></script>
+    <script src="../JS/includemodalajoutermedecin.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

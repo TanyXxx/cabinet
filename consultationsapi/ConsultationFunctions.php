@@ -1,4 +1,5 @@
 <?php
+
 require_once '../BD/connexionDB.php'; 
 require_once '../authapi/jwt_utils.php';
 
@@ -32,6 +33,16 @@ function deliver_response($status_code, $status_message, $data = null)
 
 function addConsultation($data) {
     global $conn;
+    // Récupérez la date de la consultation à partir des données
+    $dateDeConsultation = $data['date_consult'];
+
+    // Vérifiez si la date de la consultation est un jour férié
+    if (checkIfDateIsHoliday($dateDeConsultation)) {
+        // Si c'est un jour férié, retournez une erreur
+        deliver_response(400, "La date de consultation est un jour férié.");
+        return;
+    }
+
     $sql = "INSERT INTO consultation (ID_USAGER, ID_Medecin, Date_Consultation, Heure, Duree) VALUES (:id_usager, :id_medecin, :date_consult, :heure_consult, :duree_consult)";
 
     try {
@@ -137,8 +148,47 @@ function getConsultationsByMedecinId($id_medecin) {
     }
 }
 
+function checkIfDateIsHoliday($date) {
+    // Convertissez la date de consultation au format YYYY-MM-DD
+    $date = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
+
+    $year = date('Y', strtotime($date));
+    $json = @file_get_contents("https://date.nager.at/Api/v3/publicholidays/$year/FR");
+
+    if ($json === false) {
+        // La requête à l'API a échoué
+        return false;
+    }
+
+    $holidays = json_decode($json, true);
+
+    if ($holidays === null) {
+        return false;
+    }
+
+    foreach ($holidays as $holiday) {
+        // Convertir la date du jour férié au format YYYY-MM-DD
+        $holidayDate = date('Y-m-d', strtotime($holiday['date']));
+
+        if ($holidayDate === $date) {
+            error_log("Holiday found: $holidayDate");
+            return true;
+        }
+    }
+    return false;
+}
 function updateConsultation($id, $data) {
     global $conn;
+    // Récupérez la date de la consultation à partir des données
+    $dateDeConsultation = $data['date_consult'];
+
+    // Vérifiez si la date de la consultation est un jour férié
+    if (checkIfDateIsHoliday($dateDeConsultation)) {
+        // Si c'est un jour férié, retournez une erreur
+        deliver_response(400, "La date de consultation est un jour férié.");
+        return;
+    }
+
     $columnMappings = [
         'id_usager' => 'ID_USAGER',
         'id_medecin' => 'ID_Medecin',

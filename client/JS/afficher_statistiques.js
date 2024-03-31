@@ -1,10 +1,12 @@
+console.log("afficher_statistiques.js chargé.");
+
 document.addEventListener('DOMContentLoaded', function() {
     fetchStatsMedecins();
     fetchStatsUsagers();
 });
 
 function fetchStatsMedecins() {
-    fetch('http://localhost/cabinet/stats/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/stats/medecins', {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
@@ -15,8 +17,9 @@ function fetchStatsMedecins() {
 }
 
 function fetchStatsUsagers() {
-    fetch('http://localhost/cabinet/stats/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/stats/usagers', {
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })

@@ -16,9 +16,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function fetchConsultations() {
-    fetch('http://localhost/cabinet/consultations', {
+    fetch('https://soltanhamadouche.alwaysdata.net/consultations', {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -38,7 +39,7 @@ function displayConsultations(response) {
 
             const header = table.createTHead();
             const headerRow = header.insertRow();
-            const headers = ['Date de Consultation', 'Heure de Consultation', 'Durée de Consultation','Usager', 'Médecin','Actions'];
+            const headers = ['Date', 'Heure', 'Durée (en minutes)','Usager', 'Médecin','Actions'];
             headers.forEach(text => {
                 const cell = document.createElement('th');
                 cell.textContent = text;
@@ -72,9 +73,10 @@ function displayConsultations(response) {
                 deleteButton.textContent = 'Supprimer';
                 deleteButton.onclick = function () {
                     if (confirm('Êtes-vous sûr de vouloir supprimer cette consultation?')) {
-                        fetch(`http://localhost/cabinet/consultations/${consultation.ID_Consultation}`, {
+                        fetch(`https://soltanhamadouche.alwaysdata.net/consultations/${consultation.ID_Consultation}`, {
                             method: 'DELETE',
                             headers: {
+                                'Content-Type': 'application/json',
                                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
                             }
                         })
@@ -82,7 +84,7 @@ function displayConsultations(response) {
                             .then(data => {
                                 if (data.status_code === 200) {
                                     console.log('Suppression réussie:', data);
-                                    window.location.reload();
+                                    fetchConsultations();
                                 } else {
                                     console.error('Erreur lors de la suppression:', data.status_message);
                                 }
@@ -115,9 +117,10 @@ window.attachEventToEditForm = attachEventToEditForm;
 
 
 function fetchUsagersForDropdown(dropdownId) {
-    fetch('http://localhost/cabinet/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -158,12 +161,9 @@ function fillEditModal(consultation) {
 }
 
 function attachEventToEditForm() {
-    console.log("Tentative d'attachement de l'événement submit au formulaire");
     var form = document.getElementById('editConsultationForm');
     if (form) {
-        console.log("Le formulaire a été trouvé, attachement de l'événement submit.");
         form.addEventListener('submit', function (event) {
-            console.log("Le formulaire est en train d'être soumis.");
             event.preventDefault();
             submitEditModalForm();
         });
@@ -176,9 +176,10 @@ function attachEventToEditForm() {
 window.attachEventToEditForm = attachEventToEditForm;
 
 function prepareAndShowEditModal(consultationID) {
-    fetch(`http://localhost/cabinet/consultations/${consultationID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/consultations/${consultationID}`, {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -199,7 +200,7 @@ async function submitEditModalForm() {
         duree_consult: document.getElementById('editConsultationDuree').value,
     };
 
-    fetch(`http://localhost/cabinet/consultations/${consultationID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/consultations/${consultationID}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -217,7 +218,7 @@ async function submitEditModalForm() {
             displayApiEditResponseMessage(responseData.status_message, 'success');
             setTimeout(function() {
                 $('#editConsultationModal').modal('hide');
-            }, 5000);
+            }, 4000);
             fetchConsultations();
         })
         .catch(responseData => {
@@ -252,7 +253,7 @@ function submitAddConsultationForm() {
         duree_consult: form.elements['duree'].value
     };
 
-    fetch('http://localhost/cabinet/consultations', {
+    fetch('https://soltanhamadouche.alwaysdata.net/consultations', {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
@@ -273,7 +274,7 @@ function submitAddConsultationForm() {
         fetchConsultations();
         setTimeout(() => {
             $('#addConsultationModal').modal('hide'); // Close the modal
-        }, 2000);
+        }, 4000);
     })
     .catch(responseData => {
         // Error handling, either coming from the network, or from the not ok server response
@@ -290,9 +291,10 @@ function displayApiAddResponseMessage(message, type) {
 }
 
 function fetchUsagersForDropdown(dropdownId) {
-    fetch('http://localhost/cabinet/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -315,9 +317,10 @@ function fetchUsagersForDropdown(dropdownId) {
 }
 
 function fetchMedecinsForDropdown(dropdownId) {
-    fetch('http://localhost/cabinet/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -351,8 +354,9 @@ function filterConsultationsByDoctor() {
     }
 
     // Sinon, récupérez les consultations pour le médecin sélectionné
-    fetch(`http://localhost/cabinet/consultations/medecin/${selectedDoctor}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/consultations/medecin/${selectedDoctor}`, {
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })

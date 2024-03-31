@@ -1,0 +1,678 @@
+swagger: '2.0'
+info:
+  description: >-
+    **R4.01 : Gestion des consultations d'un cabinet médical avec contrôle d'accès.**
+
+    Cette collection Postman contient toutes les requêtes nécessaires pour interagir avec l'API du système de gestion des consultations médicales, qui est divisée en deux parties principales : AppMed pour la gestion des ressources et AuthAPI pour l'authentification.
+  version: 1.0.0
+  title: C2 HAMADOUCHE-BEUGNET API Documentation
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: soltan.hamadouche@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: soltanhamadouche.alwaysdata.net
+basePath: /
+schemes:
+  - https
+tags:
+  - name: Médecins
+    description: Opérations concernant les médecins
+  - name: Usagers
+    description: Opérations concernant les usagers
+  - name: Consultations
+    description: Opérations concernant les consultations médicales
+  - name: Authentification
+    description: Opérations d'authentification et de sécurité
+  - name: Statistiques
+    description: Opérations liées aux statistiques de l'application
+security:
+  - Bearer: []
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >-
+      Pour accéder à l'API, un jeton d'authentification est requis. Le jeton est obtenu via l'API AuthAPI. Utilisez ce jeton comme clé API pour l'authentifier sur les endpoints qui nécessitent une authentification.
+paths:
+  /auth:
+    post:
+      tags:
+        - Authentification
+      summary: Demande d'authentification
+      description: Authentifie un utilisateur et retourne un jeton JWT.
+      operationId: authentification
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: Les identifiants de l'utilisateur pour l'authentification.
+          required: true
+          schema:
+            type: object
+            required:
+              - login
+              - mdp
+            properties:
+              login:
+                type: string
+                example: secretaire1
+              mdp:
+                type: string
+                example: password1234!
+      responses:
+        200:
+          description: Authentification réussie, jeton JWT retourné.
+          schema:
+            type: object
+            properties:
+              jwt:
+                type: string
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        401:
+          description: Authentification échouée, identifiants invalides.
+    get:
+      tags:
+        - Authentification
+      summary: Demande de validation du jeton
+      description: Valide le jeton JWT pour vérifier sa validité.
+      operationId: validationToken
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Jeton valide.
+        401:
+          description: Jeton invalide ou expiré.
+  /usagers:
+    post:
+      tags:
+        - Usagers
+      summary: Créer un usager
+      description: Crée un nouveau usager avec les informations fournies.
+      operationId: creerUsager
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: usager
+          description: Les informations de l'usager à créer.
+          required: true
+          schema:
+            type: object
+            required:
+              - civilite
+              - nom
+              - prenom
+              - sexe
+              - adresse
+              - code_postal
+              - ville
+              - date_nais
+              - lieu_nais
+              - num_secu
+              - id_medecin
+            properties:
+              civilite:
+                type: string
+                example: M.
+              nom:
+                type: string
+                example: Dumond
+              prenom:
+                type: string
+                example: Armand
+              sexe:
+                type: string
+                example: H
+              adresse:
+                type: string
+                example: 85, Square de la Couronne
+              code_postal:
+                type: string
+                example: 91120
+              ville:
+                type: string
+                example: Palaiseau
+              date_nais:
+                type: string
+                example: 14/05/1952
+              lieu_nais:
+                type: string
+                example: Nantes
+              num_secu:
+                type: string
+                example: 112233445566778
+              id_medecin:
+                type: string
+                example: 1
+      responses:
+        201:
+          description: Usager créé avec succès.
+        400:
+          description: Informations de l'usager manquantes ou invalides.
+    get:
+      tags:
+        - Usagers
+      summary: Obtenir tous les usagers
+      description: Retourne une liste de tous les usagers.
+      operationId: obtenirTousLesUsagers
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Liste des usagers récupérée avec succès.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Usager'
+
+  /usagers/{id}:
+    get:
+      tags :
+        - Usagers
+      summary: Obtenir un usager par son ID
+      description: Retourne les informations d'un usager spécifique par son ID.
+      operationId: obtenirUsagerParID
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID de l'usager à récupérer.
+      responses:
+        200:
+          description: Usager récupéré avec succès.
+        404:
+          description: Usager non trouvé.
+    patch:
+      tags:
+        - Usagers
+      summary: Modifier un usager
+      description: Met à jour les informations d'un usager spécifique par son ID.
+      operationId: modifierUsager
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID de l'usager à mettre à jour.
+        - in: body
+          name: usager
+          description: Les informations de l'usager à mettre à jour.
+          schema:
+            type: object
+            properties:
+              adresse:
+                type: string
+              code_postal:
+                type: string
+              ville:
+                type: string
+              id_medecin:
+                type: string
+      responses:
+        200:
+          description: Usager mis à jour avec succès.
+        404:
+          description: Usager non trouvé.
+    delete:
+      tags:
+        - Usagers
+      summary: Supprimer un usager
+      description: Supprime un usager spécifique par son ID.
+      operationId: supprimerUsager
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID de l'usager à supprimer.
+      responses:
+        204:
+          description: Usager supprimé avec succès.
+        404:
+          description: Usager non trouvé.
+  /medecins:
+    post:
+      tags:
+        - Médecins
+      summary: Créer un médecin
+      description: Permet de créer un nouveau médecin avec les informations fournies.
+      operationId: creerMedecin
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: medecin
+          description: Informations du médecin à créer.
+          required: true
+          schema:
+            type: object
+            required:
+              - civilite
+              - nom
+              - prenom
+            properties:
+              civilite:
+                type: string
+                example: M.
+              nom:
+                type: string
+                example: Dupond
+              prenom:
+                type: string
+                example: Gérard
+      responses:
+        201:
+          description: Médecin créé avec succès.
+        400:
+          description: Informations invalides fournies.
+
+    get:
+      tags:
+        - Médecins
+      summary: Obtenir tous les médecins
+      description: Retourne une liste de tous les médecins.
+      operationId: obtenirTousLesMedecins
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Liste des médecins récupérée avec succès.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Medecin'
+
+  /medecins/{id}:
+    get:
+      tags:
+        - Médecins
+      summary: Obtenir un médecin par son ID
+      description: Retourne les informations d'un médecin spécifique par son ID.
+      operationId: obtenirMedecinParID
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID du médecin à récupérer.
+      responses:
+        200:
+          description: Médecin récupéré avec succès.
+        404:
+          description: Médecin non trouvé.
+
+    patch:
+      tags:
+        - Médecins
+      summary: Modifier un médecin
+      description: Met à jour les informations d'un médecin spécifique par son ID.
+      operationId: modifierMedecin
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID du médecin à mettre à jour.
+        - in: body
+          name: modification
+          description: Informations du médecin à mettre à jour.
+          schema:
+            type: object
+            properties:
+              nom:
+                type: string
+                example: Martin
+      responses:
+        200:
+          description: Médecin mis à jour avec succès.
+        404:
+          description: Médecin non trouvé.
+
+    delete:
+      tags:
+        - Médecins
+      summary: Supprimer un médecin
+      description: Supprime un médecin spécifique par son ID.
+      operationId: supprimerMedecin
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID du médecin à supprimer.
+      responses:
+        204:
+          description: Médecin supprimé avec succès.
+        404:
+          description: Médecin non trouvé.
+
+  /consultations:
+    post:
+      tags:
+        - Consultations
+      summary: Créer une consultation
+      description: Permet de créer une nouvelle consultation avec les informations fournies.
+      operationId: creerConsultation
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: consultation
+          description: Informations de la consultation à créer.
+          required: true
+          schema:
+            type: object
+            required:
+              - id_usager
+              - id_medecin
+              - date_consult
+              - heure_consult
+              - duree_consult
+            properties:
+              id_usager:
+                type: string
+                example: "2"
+              id_medecin:
+                type: string
+                example: "8"
+              date_consult:
+                type: string
+                example: "12/10/24"
+              heure_consult:
+                type: string
+                example: "11:30"
+              duree_consult:
+                type: string
+                example: "30"
+      responses:
+        201:
+          description: Consultation créée avec succès.
+
+    get:
+      tags:
+        - Consultations
+      summary: Obtenir toutes les consultations
+      description: Retourne une liste de toutes les consultations.
+      operationId: obtenirToutesLesConsultations
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Liste des consultations récupérée avec succès.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Consultation'
+
+  /consultations/{id}:
+    get:
+      tags:
+        - Consultations
+      summary: Obtenir une consultation par son ID
+      description: Retourne les informations d'une consultation spécifique par son ID.
+      operationId: obtenirConsultationParID
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID de la consultation à récupérer.
+      responses:
+        200:
+          description: Consultation récupérée avec succès.
+        404:
+          description: Consultation non trouvée.
+
+    patch:
+      tags:
+        - Consultations
+      summary: Modifier une consultation
+      description: Met à jour les informations d'une consultation spécifique par son ID.
+      operationId: modifierConsultation
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID de la consultation à mettre à jour.
+        - in: body
+          name: modification
+          description: Informations de la consultation à mettre à jour.
+          schema:
+            type: object
+            properties:
+              date_consult:
+                type: string
+                example: "12/10/24"
+              heure_consult:
+                type: string
+                example: "12:30"
+              duree_consult:
+                type: string
+                example: "45"
+      responses:
+        200:
+          description: Consultation mise à jour avec succès.
+        404:
+          description: Consultation non trouvée.
+
+    delete:
+      tags:
+        - Consultations
+      summary: Supprimer une consultation
+      description: Supprime une consultation spécifique par son ID.
+      operationId: supprimerConsultation
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          description: L'ID de la consultation à supprimer.
+      responses:
+        204:
+          description: Consultation supprimée avec succès.
+        404:
+          description: Consultation non trouvée.
+
+  /consultations/medecin/{id_medecin}:
+    get:
+      tags:
+        - Consultations
+      summary: Obtenir les consultations d'un médecin
+      description: Retourne une liste de toutes les consultations d'un médecin spécifique.
+      operationId: obtenirConsultationsDunMedecin
+      produces:
+        - application/json
+      parameters:
+        - name: id_medecin
+          in: path
+          required: true
+          type: string
+          description: L'ID du médecin dont on souhaite récupérer les consultations.
+      responses:
+        200:
+          description: Liste des consultations du médecin récupérée avec succès.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Consultation'
+
+  /stats/medecins:
+    get:
+      tags:
+        - Statistiques
+      summary: Stats médecins
+      description: Obtient des statistiques sur les médecins, comme le nombre total de consultations par médecin.
+      operationId: statsMedecins
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Statistiques des médecins obtenues avec succès.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/StatMedecin'
+
+  /stats/usagers:
+    get:
+      tags:
+        - Statistiques
+      summary: Stats usagers
+      description: Obtient des statistiques sur les usagers, comme le nombre total de consultations par usager.
+      operationId: statsUsagers
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Statistiques des usagers obtenues avec succès.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/StatUsager'
+
+definitions:
+  Usager:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "22"
+      civilite:
+        type: string
+        example: "M."
+      nom:
+        type: string
+        example: "Dupont"
+      prenom:
+        type: string
+        example: "Jean"
+      sexe:
+        type: string
+        example: "M"
+      adresse:
+        type: string
+        example: "123 Rue de la Ville"
+      code_postal:
+        type: string
+        example: "75000"
+      ville:
+        type: string
+        example: "Paris"
+      date_nais:
+        type: string
+        example: "01/01/1980"
+      lieu_nais:
+        type: string
+        example: "Paris"
+      num_secu:
+        type: string
+        example: "123456789012345"
+      id_medecin:
+        type: string
+        example: "1"
+
+  Medecin:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "22"
+      civilite:
+        type: string
+        example: "M."
+      nom:
+        type: string
+        example: "Smith"
+      prenom:
+        type: string
+        example: "John"
+  
+  Consultation:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "53"
+      id_usager:
+        type: string
+        example: "2"
+      id_medecin:
+        type: string
+        example: "8"
+      date_consult:
+        type: string
+        example: "12/10/24"
+      heure_consult:
+        type: string
+        example: "11:30"
+      duree_consult:
+        type: string
+        example: "30"
+      commentaire:
+        type: string
+        example: "Consultation de routine"
+        
+  StatMedecin:
+    type: object
+    properties:
+      Medecin:
+        type: string
+        example: "Dupont Jean"
+      TotalHeures:
+        type: float
+        example: "2"
+
+  StatUsager:
+    type: object
+    properties:
+      Tranche:
+        type: string
+        example: "Moins de 25 ans"
+      Hommes:
+        type: integer
+        example: "5"
+      Femmes:
+        type: integer
+        example: "3"
+
+
+

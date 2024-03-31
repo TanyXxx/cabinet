@@ -33,7 +33,6 @@ function getStatistiquesUsagers() {
     deliver_response(200, "Statistiques usagers récupérées avec succès.", $response);
 }
 
-
 function getStatistiquesMedecins() {
     global $conn;
     $response = [];
@@ -45,7 +44,8 @@ function getStatistiquesMedecins() {
         $stmt = $conn->query($sql);
         while ($ligne = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $nomMedecin = $ligne['Nom'] . " " . $ligne['Prenom'];
-            $totalHeures = (int)$ligne['TotalDuree'];
+            $totalMinutes = (int)$ligne['TotalDuree'];
+            $totalHeures = round($totalMinutes / 60.0, 2); // Conversion des minutes en heures avec arrondi à 2 décimales
             $response[] = ['Medecin' => $nomMedecin, 'TotalHeures' => $totalHeures];
         }
         deliver_response(200, "Statistiques médecins récupérées avec succès.", $response);

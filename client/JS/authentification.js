@@ -5,7 +5,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const password = document.getElementById('password').value;
     const errorMessage = document.getElementById('errorMessage');
 
-    fetch('http://localhost/cabinet/auth', { // Remplacez par l'URL correcte de votre AuthAPI
+    fetch('https://soltanhamadouche.alwaysdata.net/auth', { // Remplacez par l'URL correcte de votre AuthAPI
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ login: username, mdp: password })

@@ -1,8 +1,7 @@
 RewriteEngine On
-
 # Réécriture pour l'API medecins
-RewriteRule ^medecins$ medecinapi/index.php [NC,L]
-RewriteRule ^medecins/([0-9]+)$ medecinapi/index.php?id=$1 [NC,L]
+RewriteRule ^medecins$ medecinsapi/index.php [NC,L]
+RewriteRule ^medecins/([0-9]+)$ medecinsapi/index.php?id=$1 [NC,L]
 
 # Réécriture pour l'API usagers
 RewriteRule ^usagers$ usagersapi/index.php [NC,L]

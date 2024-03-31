@@ -26,9 +26,10 @@ function attachEventListeners() {
 window.attachEventListeners = attachEventListeners;
 
 function fetchMedecins() {
-    fetch('http://localhost/cabinet/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -100,9 +101,10 @@ function displayMedecins(response) {
 }
 
 function prepareAndShowEditModal(medecinID) {
-    fetch(`http://localhost/cabinet/medecins/${medecinID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/medecins/${medecinID}`, {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -139,9 +141,10 @@ function fillEditModal(medecin) {
 
 function deleteMedecin(medecinID) {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce médecin?')) {
-        fetch(`http://localhost/cabinet/medecins/${medecinID}`, {
+        fetch(`https://soltanhamadouche.alwaysdata.net/medecins/${medecinID}`, {
             method: 'DELETE',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
         })
@@ -174,7 +177,7 @@ function submitAddMedecinForm() {
         prenom: document.getElementById('addPrenom').value
     };
 
-    fetch('http://localhost/cabinet/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -224,7 +227,7 @@ async function submitEditModalForm() {
     };
 
     try {
-        const response = await fetch(`http://localhost/cabinet/medecins/${document.getElementById('editIdMedecin').value}`, {
+        const response = await fetch(`https://soltanhamadouche.alwaysdata.net/medecins/${document.getElementById('editIdMedecin').value}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

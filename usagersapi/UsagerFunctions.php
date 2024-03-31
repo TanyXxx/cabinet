@@ -53,7 +53,6 @@ function getAllUsagers()
     }
 }
 
-
 function getUsagerById($id)
 {
     global $conn;
@@ -139,7 +138,6 @@ function addUsager($data) {
     }
 }
 
-
 function updateUsager($id, $data)
 {
     global $conn;
@@ -160,7 +158,7 @@ function updateUsager($id, $data)
             $key = 'ID_Medecin_Ref';
         }
         $sets[] = "$key = :$key";
-        $params[":$key"] = $value;
+        $params[":$key"] = $value !== "" ? $value : null;
     }
 
     if (empty($sets)) {
@@ -181,7 +179,6 @@ function updateUsager($id, $data)
         deliver_response(500, "Erreur lors de la mise à jour de l'usager: " . $e->getMessage());
     }
 }
-
 
 
 function deleteUsager($id)

@@ -9,15 +9,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (addButton) {
         addButton.addEventListener('click', openAddModal);
     }
-    attachEventToEditForm();
     fetchMedecinsForDropdown('addMedecinRef');
     fetchMedecinsForDropdown('editMedecinRef');
 });
 
 function fetchUsagers() {
-    fetch('http://localhost/cabinet/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -73,19 +73,21 @@ function displayUsagers(response) {
                 deleteButton.href = deleteButton.textContent = 'Supprimer';
                 deleteButton.onclick = function () {
                     if (confirm('Êtes-vous sûr de vouloir supprimer cet usager?')) {
-                        fetch(`http://localhost/cabinet/usagers/${usager.ID_USAGER}`, {
+                        fetch(`https://soltanhamadouche.alwaysdata.net/usagers/${usager.ID_USAGER}`, {
                             method: 'DELETE',
                             headers: {
+                                'Content-Type': 'application/json',
                                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
                             }
                         })
                             .then(response => response.json())
                             .then(data => {
                                 if (data.status_code === 200) {
-                                    console.log('Suppression réussie:', data);
-                                    window.location.reload(); // Recharger la page ou retirer l'élément du DOM si vous préférez
+                                    fetchUsagers(); // Actualiser la liste des usagers
+                                    displayApiDeleteResponseMessage(data.status_message, 'success');
                                 } else {
                                     console.error('Erreur lors de la suppression:', data.status_message);
+                                    displayApiDeleteResponseMessage(data.status_message, 'error');
                                 }
                             })
                             .catch(error => {
@@ -138,9 +140,10 @@ function fillEditModal(usager) {
 }
 
 function prepareAndShowEditModal(usagerID) {
-    fetch(`http://localhost/cabinet/usagers/${usagerID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/usagers/${usagerID}`, {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
@@ -152,12 +155,9 @@ function prepareAndShowEditModal(usagerID) {
 }
 
 function attachEventToEditForm() {
-    console.log("Tentative d'attachement de l'événement submit au formulaire");
     var form = document.getElementById('editUsagerForm');
     if (form) {
-        console.log("Le formulaire a été trouvé, attachement de l'événement submit.");
         form.addEventListener('submit', function (event) {
-            console.log("Le formulaire est en train d'être soumis.");
             event.preventDefault();
             submitEditModalForm();
         });
@@ -185,7 +185,7 @@ function submitEditModalForm() {
         ID_Medecin_Ref: document.getElementById('editMedecinRef').value,
     };
 
-    fetch(`http://localhost/cabinet/usagers/${usagerID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/usagers/${usagerID}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -203,11 +203,11 @@ function submitEditModalForm() {
             return response.json();
         })
         .then(responseData => {
-            // Si la réponse est OK, affichez le message de l'API
             displayApiResponseMessage(responseData.status_message, 'success');
-            // Fermer le modal et actualiser la liste des usagers si nécessaire
-            $('#editUsagerModal').modal('hide');
             fetchUsagers();
+            setTimeout(() => {
+            $('#editUsagerModal').modal('hide'); // Fermez le modal
+            }, 2000);
         })
         .catch(responseData => {
             // Ici responseData est l'objet JSON transformé dans le premier then en cas de réponse non OK
@@ -253,33 +253,33 @@ function submitAddUsagerForm() {
         ID_Medecin_Ref: document.getElementById('addMedecinRef').value,
     };
 
-   fetch('http://localhost/cabinet/usagers', {
-       method: 'POST',
-       headers: {
-           'Content-Type': 'application/json',
-           'Authorization': 'Bearer ' + localStorage.getItem('jwt')
-       },
-       body: JSON.stringify(data)
-   })
-   .then(response => {
-       if (!response.ok) {
-           // Si la réponse n'est pas ok, nous voulons convertir la réponse en json
-           // et renvoyer une promesse rejetée pour entrer dans le bloc catch
-           return response.json().then(json => Promise.reject(json));
-       }
-       return response.json();
-   })
-   .then(responseData => {
-       displayApiAddResponseMessage(responseData.status_message, 'success');
-       fetchUsagers();
-       setTimeout(() => {
-        $('#addUsagerModal').modal('hide'); // Fermez le modal
-    }, 2000);
-   })
-   .catch(responseData => {
-       // Gestion des erreurs, soit venant du réseau, soit de la réponse non ok du serveur
-       displayApiAddResponseMessage(responseData.status_message, 'error');
-   });
+    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                // Si la réponse n'est pas ok, nous voulons convertir la réponse en json
+                // et renvoyer une promesse rejetée pour entrer dans le bloc catch
+                return response.json().then(json => Promise.reject(json));
+            }
+            return response.json();
+        })
+        .then(responseData => {
+            displayApiAddResponseMessage(responseData.status_message, 'success');
+            fetchUsagers();
+            setTimeout(() => {
+                $('#addUsagerModal').modal('hide'); // Fermez le modal
+            }, 2000);
+        })
+        .catch(responseData => {
+            // Gestion des erreurs, soit venant du réseau, soit de la réponse non ok du serveur
+            displayApiAddResponseMessage(responseData.status_message, 'error');
+        });
 }
 
 function displayApiAddResponseMessage(message, type) {
@@ -290,28 +290,37 @@ function displayApiAddResponseMessage(message, type) {
     setTimeout(() => { messageDiv.style.display = 'none'; }, 4000); // Cache le message après 4 secondes
 }
 
+function displayApiDeleteResponseMessage(message, type) {
+    const messageDiv = document.getElementById('deleteResponseMessage');
+    messageDiv.textContent = message; // Message provenant de l'API
+    messageDiv.className = 'alert ' + (type === 'error' ? 'alert-danger' : 'alert-success');
+    messageDiv.style.display = 'block'; // Assurez-vous que votre élément est visible
+    setTimeout(() => { messageDiv.style.display = 'none'; }, 4000); // Cache le message après 4 secondes
+}
+
 
 function fetchMedecinsForDropdown(dropdownId) {
-    fetch('http://localhost/cabinet/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status_code === 200 && Array.isArray(data.data)) {
-            const select = document.getElementById(dropdownId);
-            select.innerHTML = '<option value="">Sélectionnez un médecin référent</option>'; // Clear existing options and add a placeholder
-            data.data.forEach(medecin => {
-                const option = document.createElement('option');
-                option.value = medecin.ID_Medecin;
-                option.textContent = `${medecin.Civilite} ${medecin.Nom} ${medecin.Prenom}`;
-                select.appendChild(option);
-            });
-        }
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 200 && Array.isArray(data.data)) {
+                const select = document.getElementById(dropdownId);
+                select.innerHTML = '<option value="">Sélectionnez un médecin référent</option>'; // Clear existing options and add a placeholder
+                data.data.forEach(medecin => {
+                    const option = document.createElement('option');
+                    option.value = medecin.ID_Medecin;
+                    option.textContent = `${medecin.Civilite} ${medecin.Nom} ${medecin.Prenom}`;
+                    select.appendChild(option);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
 }

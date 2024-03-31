@@ -11,6 +11,9 @@ header('Content-Type: application/json');
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
+    case 'OPTIONS':
+        deliver_response(200, "OK");
+        break;
     case 'GET':
         $jwt = get_bearer_token();
 

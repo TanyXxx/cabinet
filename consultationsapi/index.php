@@ -1,5 +1,6 @@
 <?php
 require_once 'ConsultationFunctions.php';
+require_once '../authapi/jwt_utils.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');

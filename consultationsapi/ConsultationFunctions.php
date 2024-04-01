@@ -1,7 +1,6 @@
 <?php
 
 require_once '../BD/connexionDB.php'; 
-require_once '../authapi/jwt_utils.php';
 
 function deliver_response($status_code, $status_message, $data = null)
 {

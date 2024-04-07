@@ -40,7 +40,7 @@ switch ($method) {
             $payload = [
                 'login' => $user['NomUtilisateur'], 
                 'role' => $user['Role'], 
-                'exp' => (time() + 60 * 60 * 24) // Expiration après 24 heure
+                'exp' => (time() + 60 * 60 * 12) // Expiration après 12 heures 
             ];             
             $jwt = generate_jwt($headers, $payload, 'secret_key'); 
 

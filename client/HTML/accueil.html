@@ -19,6 +19,16 @@
     </div>
     <script src="../JS/auth.js" defer></script>
     <script src="../JS/includemenu.js" defer></script>
+    <script>
+        window.onload = function() {
+            var error = localStorage.getItem('error');
+            if (error) {
+                // Afficher le message d'erreur
+                alert(error);
+                // Supprimer le message d'erreur du localStorage
+                localStorage.removeItem('error');
+            }
+        }
+        </script>
 </body>
-
 </html>

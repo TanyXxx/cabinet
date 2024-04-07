@@ -2,7 +2,7 @@ console.log("afficher_medecins.js chargé.");
 
 document.addEventListener('DOMContentLoaded', function () {
     if (!localStorage.getItem('jwt')) {
-        window.location.href = 'login.html';
+        window.location.href = 'https://soltanhamadouche.alwaysdata.net/client/HTML/login.html';
     }
     fetchMedecins();
     var addButton = document.querySelector('.btn-ajouter-medecin');

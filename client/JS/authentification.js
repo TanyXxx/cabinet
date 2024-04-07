@@ -16,7 +16,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
             // Connexion réussie, sauvegarde du JWT et redirection
             console.log("Connexion réussie. JWT:", data.data.jwt);
             localStorage.setItem('jwt', data.data.jwt); // Sauvegarde du JWT dans le stockage local
-            window.location.href = 'accueil.html'; // Redirection vers la page d'accueil
+            window.location.href = 'https://soltanhamadouche.alwaysdata.net/client/HTML/accueil.html'; // Redirection vers la page d'accueil
         } else {
             // Affichage du message d'erreur
             errorMessage.textContent = 'Login ou mot de passe incorrect';

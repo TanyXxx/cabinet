@@ -2,7 +2,7 @@ console.log("afficher_consultations.js chargé.");
 
 document.addEventListener('DOMContentLoaded', function () {
     if (!localStorage.getItem('jwt')) {
-        window.location.href = 'login.html';
+        window.location.href = 'https://soltanhamadouche.alwaysdata.net/client/HTML/login.html';
     }
     fetchConsultations();
     var addButton = document.querySelector('.btn-ajouter-consultation');

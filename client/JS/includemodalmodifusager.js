@@ -1,4 +1,4 @@
-fetch('../HTML/fragments/modalModifUsager.html')
+fetch('https://soltanhamadouche.alwaysdata.net/client/HTML/fragments/modalModifUsager.html')
     .then(response => response.text())
     .then(html => {
         document.getElementById('modalModifUsager').innerHTML = html;

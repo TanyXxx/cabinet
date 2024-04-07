@@ -33,10 +33,16 @@ function deliver_response($status_code, $status_message, $data = null)
 function addConsultation($data)
 {
     global $conn;
-    // Convertir la date au format Y-m-d
-    $date = DateTime::createFromFormat('d/m/y', $data['date_consult']);
-    if ($date->format('Y') < 100) {
-        $date->modify('+2000 years');
+    // Convertir la date au format Y-m-d si nécessaire
+    $date = DateTime::createFromFormat('Y-m-d', $data['date_consult']);
+    if ($date === false) {
+        // La date n'est pas au format Y-m-d, essayez d/m/y
+        $date = DateTime::createFromFormat('d/m/y', $data['date_consult']);
+        if ($date === false) {
+            // La date n'est dans aucun des formats attendus
+            deliver_response(400, "La date de consultation n'est pas dans un format valide. Utilisez 'Y-m-d' ou 'd/m/y'.", null);
+            return;
+        }
     }
     $data['date_consult'] = $date->format('Y-m-d');
 
@@ -137,7 +143,7 @@ function getConsultationById($id)
 
             deliver_response(200, "Consultation trouvée", $consultation);
         } else {
-            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.");
+            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.", ['id' => $id]);
         }
     } catch (PDOException $e) {
         deliver_response(500, "Erreur : " . $e->getMessage());
@@ -206,10 +212,16 @@ function checkIfDateIsHoliday($date)
 function updateConsultation($id, $data)
 {
     global $conn;
-    // Convertir la date au format Y-m-d
-    $date = DateTime::createFromFormat('d/m/y', $data['date_consult']);
-    if ($date->format('Y') < 100) {
-        $date->modify('+2000 years');
+    // Convertir la date au format Y-m-d si nécessaire
+    $date = DateTime::createFromFormat('Y-m-d', $data['date_consult']);
+    if ($date === false) {
+        // La date n'est pas au format Y-m-d, essayez d/m/y
+        $date = DateTime::createFromFormat('d/m/y', $data['date_consult']);
+        if ($date === false) {
+            // La date n'est dans aucun des formats attendus
+            deliver_response(400, "La date de consultation n'est pas dans un format valide. Utilisez 'Y-m-d' ou 'd/m/y'.", null);
+            return;
+        }
     }
     $data['date_consult'] = $date->format('Y-m-d');
 
@@ -256,7 +268,7 @@ function updateConsultation($id, $data)
             deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.", ['id' => $id]);
             return;
         }
-        
+
         if ($success && $affectedRows > 0) {
             deliver_response(200, "Consultation mise à jour avec succès.", $consultation);
         } elseif ($success && $affectedRows === 0) {

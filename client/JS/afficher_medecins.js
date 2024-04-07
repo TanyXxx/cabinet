@@ -2,7 +2,7 @@ console.log("afficher_medecins.js chargé.");
 
 document.addEventListener('DOMContentLoaded', function () {
     if (!localStorage.getItem('jwt')) {
-        window.location.href = 'https://soltanhamadouche.alwaysdata.net/client/HTML/login.html';
+        window.location.href = 'https://soltanhamadouche.alwaysdata.net/login';
     }
     fetchMedecins();
     var addButton = document.querySelector('.btn-ajouter-medecin');
@@ -152,7 +152,7 @@ function deleteMedecin(medecinID) {
             .then(data => {
                 if (data.status_code === 200) {
                     console.log('Médecin supprimé avec succès');
-                    window.location.reload(); // Recharger la liste des médecins
+                    fetchMedecins(); // Recharger la liste des médecins
                 } else {
                     alert("Erreur lors de la suppression du médecin.");
                 }

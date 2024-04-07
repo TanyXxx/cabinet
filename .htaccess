@@ -17,5 +17,5 @@ RewriteRule ^app/consultations/medecin/([0-9]+)$ consultationsapi/index.php?id_m
 RewriteRule ^app/stats/medecins$ statistiquesapi/index.php?type=medecins [NC,L]
 RewriteRule ^app/stats/usagers$ statistiquesapi/index.php?type=usagers [NC,L]
 
-# Réécriture pour l'API auth
-RewriteRule ^auth$ authapi/index.php [NC,L]
+# Réécriture pour les pages HTML
+RewriteRule ^usagers$ client/HTML/afficher_usagers.html [NC,L]

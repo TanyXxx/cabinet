@@ -2,7 +2,7 @@ console.log("afficher_usagers.js chargé.");
 
 document.addEventListener('DOMContentLoaded', function () {
     if (!localStorage.getItem('jwt')) {
-        window.location.href = 'https://soltanhamadouche.alwaysdata.net/client/HTML/login.html';
+        window.location.href = 'https://soltanhamadouche.alwaysdata.net/login';
     }
     fetchUsagers();
     var addButton = document.querySelector('.btn-ajouter-usager');

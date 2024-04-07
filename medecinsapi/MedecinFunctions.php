@@ -120,7 +120,7 @@ function updateMedecin($id, $input)
             $existCheckStmt = $conn->prepare("SELECT 1 FROM medecin WHERE ID_Medecin = :id");
             $existCheckStmt->execute([':id' => $id]);
             if ($existCheckStmt->fetch()) {
-                deliver_response(400, "Mise à jour non effectuée, les données correspondent déjà aux valeurs fournies., $medecin");
+                deliver_response(400, "Mise à jour non effectuée, les données correspondent déjà aux valeurs fournies.", $medecin);
             } else {
                 deliver_response(404, "Aucun médecin trouvé avec l'ID spécifié.", ['id' => $id]);
             }
@@ -161,7 +161,7 @@ function deleteMedecin($id)
             deliver_response(404, "Aucun médecin trouvé avec l'ID spécifié.", ['id' => $id]);
         }
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
+        deliver_response(500, "Erreur, le medecin est lié à une consultation: " . $e->getMessage(), ['id' => $id]);
     }
 }
 

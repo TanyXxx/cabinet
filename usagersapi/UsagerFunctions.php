@@ -224,6 +224,6 @@ function deleteUsager($id)
             deliver_response(404, "Aucun usager trouvé avec l'ID spécifié.", ['id' => $id]);
         }
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
+        deliver_response(500, "Erreur l'usager est lié à une consultation : " . $e->getMessage(), ['id' => $id]);
     }
 }

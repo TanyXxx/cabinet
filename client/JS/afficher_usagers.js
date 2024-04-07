@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function fetchUsagers() {
-    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/usagers', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ function displayUsagers(response) {
                 deleteButton.href = deleteButton.textContent = 'Supprimer';
                 deleteButton.onclick = function () {
                     if (confirm('Êtes-vous sûr de vouloir supprimer cet usager?')) {
-                        fetch(`https://soltanhamadouche.alwaysdata.net/usagers/${usager.ID_USAGER}`, {
+                        fetch(`https://soltanhamadouche.alwaysdata.net/app/usagers/${usager.ID_USAGER}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ function fillEditModal(usager) {
 }
 
 function prepareAndShowEditModal(usagerID) {
-    fetch(`https://soltanhamadouche.alwaysdata.net/usagers/${usagerID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/app/usagers/${usagerID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ function submitEditModalForm() {
         ID_Medecin_Ref: document.getElementById('editMedecinRef').value,
     };
 
-    fetch(`https://soltanhamadouche.alwaysdata.net/usagers/${usagerID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/app/usagers/${usagerID}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -253,7 +253,7 @@ function submitAddUsagerForm() {
         ID_Medecin_Ref: document.getElementById('addMedecinRef').value,
     };
 
-    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/usagers', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -300,7 +300,7 @@ function displayApiDeleteResponseMessage(message, type) {
 
 
 function fetchMedecinsForDropdown(dropdownId) {
-    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/medecins', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

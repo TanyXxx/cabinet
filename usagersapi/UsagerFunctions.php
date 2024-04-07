@@ -41,9 +41,9 @@ function getAllUsagers()
         $usagers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($usagers as $key => $usager) {
-            unset($usagers[$key]['ID_Medecin_Ref']); 
+            unset($usagers[$key]['ID_Medecin_Ref']);
             if (empty($usager['MedecinReferent'])) {
-                $usagers[$key]['MedecinReferent'] = 'Non assigné'; 
+                $usagers[$key]['MedecinReferent'] = 'Non assigné';
             }
         }
 
@@ -80,7 +80,8 @@ function getUsagerById($id)
     }
 }
 
-function addUsager($data) {
+function addUsager($data)
+{
     global $conn;
 
     // Traitement de la date de naissance
@@ -132,7 +133,12 @@ function addUsager($data) {
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute($parameters);
-        deliver_response(201, "Usager créé avec succès.");
+        // Récupérer les données de l'usager nouvellement créé
+        $sql = "SELECT * FROM usager WHERE ID_USAGER = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':id' => $conn->lastInsertId()]);
+        $usager = $stmt->fetch(PDO::FETCH_ASSOC);
+        deliver_response(201, "Usager créé avec succès.", $usager);
     } catch (PDOException $e) {
         deliver_response(500, "Erreur lors de la création de l'usager: " . $e->getMessage());
     }
@@ -147,7 +153,7 @@ function updateUsager($id, $data)
     $existCheckStmt->bindParam(':id', $id, PDO::PARAM_INT);
     $existCheckStmt->execute();
     if ($existCheckStmt->rowCount() === 0) {
-        deliver_response(404, "Aucun usager trouvé avec l'ID spécifié.");
+        deliver_response(404, "Aucun usager trouvé avec l'ID spécifié.", ['id' => $id]);
         return;
     }
 
@@ -171,7 +177,13 @@ function updateUsager($id, $data)
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
         if ($stmt->rowCount() > 0) {
-            deliver_response(200, "Usager modifié avec succès.");
+            // Récupérer les données de l'usager après la mise à jour
+            $existSql = "SELECT * FROM usager WHERE ID_USAGER = :id";
+            $existStmt = $conn->prepare($existSql);
+            $existStmt->execute([':id' => $id]);
+            $usager = $existStmt->fetch(PDO::FETCH_ASSOC);
+
+            deliver_response(200, "Usager modifié avec succès.", $usager);
         } else {
             deliver_response(400, "Aucune modification effectuée, les données fournies correspondent déjà aux valeurs existantes.");
         }
@@ -184,17 +196,34 @@ function updateUsager($id, $data)
 function deleteUsager($id)
 {
     global $conn;
+    // Récupérer les données de l'usager avant de le supprimer
+    $sql = "SELECT * FROM usager WHERE ID_USAGER = :id";
+    try {
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $usager = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($usager === false) {
+            deliver_response(404, "Aucun usager trouvé avec l'ID spécifié.", ['id' => $id]);
+            return;
+        }
+    } catch (PDOException $e) {
+        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
+        return;
+    }
+
+    // Supprimer l'usager
     $sql = "DELETE FROM usager WHERE ID_USAGER = :id";
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            deliver_response(200, "Usager supprimé avec succès.");
+            deliver_response(200, "Usager supprimé avec succès.", $usager);
         } else {
-            deliver_response(404, "Aucun usager trouvé avec cet ID.");
+            deliver_response(404, "Aucun usager trouvé avec l'ID spécifié.", ['id' => $id]);
         }
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur lors de la suppression de l'usager: " . $e->getMessage());
+        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../BD/connexionDB.php'; 
+require_once '../BD/connexionDB.php';
 
 function deliver_response($status_code, $status_message, $data = null)
 {
@@ -30,15 +30,20 @@ function deliver_response($status_code, $status_message, $data = null)
     echo $json_response;
 }
 
-function addConsultation($data) {
+function addConsultation($data)
+{
     global $conn;
-    // Récupérez la date de la consultation à partir des données
-    $dateDeConsultation = $data['date_consult'];
+    // Convertir la date au format Y-m-d
+    $date = DateTime::createFromFormat('d/m/y', $data['date_consult']);
+    if ($date->format('Y') < 100) {
+        $date->modify('+2000 years');
+    }
+    $data['date_consult'] = $date->format('Y-m-d');
 
     // Vérifiez si la date de la consultation est un jour férié
-    if (checkIfDateIsHoliday($dateDeConsultation)) {
+    if (checkIfDateIsHoliday($data['date_consult'])) {
         // Si c'est un jour férié, retournez une erreur
-        deliver_response(400, "La date de consultation est un jour férié.");
+        deliver_response(400, "La date de consultation est un jour férié.", null);
         return;
     }
 
@@ -55,17 +60,36 @@ function addConsultation($data) {
         ]);
 
         if ($success) {
-            deliver_response(201, "Consultation créée avec succès", ['id' => $conn->lastInsertId()]);
+            // Récupérer l'ID de la consultation après l'ajout
+            $idSql = "SELECT ID_Consultation FROM consultation WHERE ID_USAGER = :id_usager AND ID_Medecin = :id_medecin AND Date_Consultation = :date_consult AND Heure = :heure_consult AND Duree = :duree_consult";
+            $idStmt = $conn->prepare($idSql);
+            $idStmt->execute([
+                ':id_usager' => $data['id_usager'],
+                ':id_medecin' => $data['id_medecin'],
+                ':date_consult' => $data['date_consult'],
+                ':heure_consult' => $data['heure_consult'],
+                ':duree_consult' => $data['duree_consult']
+            ]);
+            $id = $idStmt->fetch(PDO::FETCH_ASSOC)['ID_Consultation'];
+
+            // Récupérer les données de la consultation après l'ajout
+            $existSql = "SELECT * FROM consultation WHERE ID_Consultation = :id";
+            $existStmt = $conn->prepare($existSql);
+            $existStmt->execute([':id' => $id]);
+            $consultation = $existStmt->fetch(PDO::FETCH_ASSOC);
+
+            deliver_response(201, "Consultation créée avec succès : id = " . $id, $consultation);
         } else {
             deliver_response(400, "Erreur lors de la création de la consultation");
         }
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur : " . $e->getMessage());
+        deliver_response(500, "La nouvelle consultation n'a pas été ajoutée car une autre similaire était déjà présente dans la base de données.");
     }
 }
 
 
-function getAllConsultations() {
+function getAllConsultations()
+{
     global $conn;
     $sql = "SELECT consultation.*, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom
             FROM consultation
@@ -76,7 +100,7 @@ function getAllConsultations() {
         $stmt->execute();
         $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $consultations = array_map(function($consultation) {
+        $consultations = array_map(function ($consultation) {
             $medecin = trim($consultation['MedecinNom'] . ' ' . $consultation['MedecinPrenom']);
             $usager = trim($consultation['UsagerNom'] . ' ' . $consultation['UsagerPrenom']);
             $consultation['Medecin'] = $medecin ? $medecin : 'Non assigné';
@@ -91,7 +115,8 @@ function getAllConsultations() {
     }
 }
 
-function getConsultationById($id) {
+function getConsultationById($id)
+{
     global $conn;
     $sql = "SELECT consultation.*, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom
             FROM consultation
@@ -119,7 +144,8 @@ function getConsultationById($id) {
     }
 }
 
-function getConsultationsByMedecinId($id_medecin) {
+function getConsultationsByMedecinId($id_medecin)
+{
     global $conn;
     $sql = "SELECT consultation.*, medecin.Nom as MedecinNom, medecin.Prenom as MedecinPrenom, usager.Nom as UsagerNom, usager.Prenom as UsagerPrenom
             FROM consultation
@@ -132,7 +158,7 @@ function getConsultationsByMedecinId($id_medecin) {
         $stmt->execute();
         $consultations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $consultations = array_map(function($consultation) {
+        $consultations = array_map(function ($consultation) {
             $medecin = trim($consultation['MedecinNom'] . ' ' . $consultation['MedecinPrenom']);
             $usager = trim($consultation['UsagerNom'] . ' ' . $consultation['UsagerPrenom']);
             $consultation['Medecin'] = $medecin ? $medecin : 'Non assigné';
@@ -143,11 +169,12 @@ function getConsultationsByMedecinId($id_medecin) {
 
         deliver_response(200, "OK", $consultations);
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur : " . $e->getMessage());
+        deliver_response(500, "Erreur pour le médecin avec l'ID " . $id_medecin . " : " . $e->getMessage(), ['id_medecin' => $id_medecin]);
     }
 }
 
-function checkIfDateIsHoliday($date) {
+function checkIfDateIsHoliday($date)
+{
     // Convertissez la date de consultation au format YYYY-MM-DD
     $date = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
 
@@ -176,15 +203,20 @@ function checkIfDateIsHoliday($date) {
     }
     return false;
 }
-function updateConsultation($id, $data) {
+function updateConsultation($id, $data)
+{
     global $conn;
-    // Récupérez la date de la consultation à partir des données
-    $dateDeConsultation = $data['date_consult'];
+    // Convertir la date au format Y-m-d
+    $date = DateTime::createFromFormat('d/m/y', $data['date_consult']);
+    if ($date->format('Y') < 100) {
+        $date->modify('+2000 years');
+    }
+    $data['date_consult'] = $date->format('Y-m-d');
 
     // Vérifiez si la date de la consultation est un jour férié
-    if (checkIfDateIsHoliday($dateDeConsultation)) {
+    if (checkIfDateIsHoliday($data['date_consult'])) {
         // Si c'est un jour férié, retournez une erreur
-        deliver_response(400, "La date de consultation est un jour férié.");
+        deliver_response(400, "La date de consultation est un jour férié.", ['id' => $id]);
         return;
     }
 
@@ -195,14 +227,6 @@ function updateConsultation($id, $data) {
         'heure_consult' => 'Heure',
         'duree_consult' => 'Duree'
     ];
-
-    $existSql = "SELECT 1 FROM consultation WHERE ID_Consultation = :id";
-    $existStmt = $conn->prepare($existSql);
-    $existStmt->execute([':id' => $id]);
-    if ($existStmt->fetchColumn() === false) {
-        deliver_response(404, "Consultation non trouvée avec l'ID spécifié.");
-        return;
-    }
 
     $sql = "UPDATE consultation SET ";
     $params = [];
@@ -222,32 +246,61 @@ function updateConsultation($id, $data) {
         $success = $stmt->execute($params);
         $affectedRows = $stmt->rowCount();
 
+        // Récupérer les données de la consultation après la mise à jour
+        $existSql = "SELECT * FROM consultation WHERE ID_Consultation = :id";
+        $existStmt = $conn->prepare($existSql);
+        $existStmt->execute([':id' => $id]);
+        $consultation = $existStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($consultation === false) {
+            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.", ['id' => $id]);
+            return;
+        }
+        
         if ($success && $affectedRows > 0) {
-            deliver_response(200, "Consultation mise à jour avec succès.");
+            deliver_response(200, "Consultation mise à jour avec succès.", $consultation);
         } elseif ($success && $affectedRows === 0) {
-            deliver_response(400, "Aucune modification apportée. Les données fournies sont peut-être identiques aux données existantes.");
+            deliver_response(400, "Aucune modification apportée. Les données fournies sont peut-être identiques aux données existantes.", $consultation);
         } else {
-            deliver_response(500, "Erreur lors de la mise à jour de la consultation.");
+            deliver_response(500, "Erreur lors de la mise à jour de la consultation.", ['id' => $id]);
         }
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur lors de la mise à jour de la consultation: " . $e->getMessage());
+        deliver_response(500, "Erreur lors de la mise à jour de la consultation, consultation déjà existante", ['id' => $id]);
     }
 }
 
 
-function deleteConsultation($id) {
+function deleteConsultation($id)
+{
     global $conn;
+    // Récupérer les données de la consultation avant de la supprimer
+    $sql = "SELECT * FROM consultation WHERE ID_Consultation = :id";
+    try {
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $consultation = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($consultation === false) {
+            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.", ['id' => $id]);
+            return;
+        }
+    } catch (PDOException $e) {
+        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
+        return;
+    }
+
+    // Supprimer la consultation
     $sql = "DELETE FROM consultation WHERE ID_Consultation = :id";
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            deliver_response(200, "Consultation supprimée avec succès.");
+            deliver_response(200, "Consultation supprimée avec succès.", $consultation);
         } else {
-            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.");
+            deliver_response(404, "Aucune consultation trouvée avec l'ID spécifié.", ['id' => $id]);
         }
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur : " . $e->getMessage());
+        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
     }
 }

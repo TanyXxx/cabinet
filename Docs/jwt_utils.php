@@ -101,31 +101,3 @@ function verify_user($login, $password) {
 function base64url_decode($data) {
     return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
 }
-
-function deliver_response($status_code, $status_message, $data = null)
-{
-    http_response_code($status_code);
-    header("Content-Type:application/json; charset=utf-8");
-
-    $status_phrases = [
-        200 => 'OK',
-        201 => 'Created',
-        400 => 'Bad Request',
-        404 => 'Not Found',
-        500 => 'Internal Server Error',
-    ];
-
-    $response = [
-        'status_code' => $status_code,
-        'status' => isset($status_phrases[$status_code]) ? $status_phrases[$status_code] : 'Unknown Status',
-        'status_message' => $status_message,
-        'data' => $data,
-    ];
-
-    $json_response = json_encode($response, JSON_UNESCAPED_UNICODE);
-    if ($json_response === false) {
-        die('json encode ERROR : ' . json_last_error_msg());
-    }
-
-    echo $json_response;
-}

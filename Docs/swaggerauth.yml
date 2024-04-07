@@ -1,0 +1,132 @@
+swagger: '2.0'
+info:
+  description: >-
+    API d'authentification pour le système de gestion des consultations médicales. Gère les opérations d'authentification des utilisateurs, y compris la connexion, la déconnexion et le renouvellement des jetons d'accès.
+  version: 1.0.0
+  title: C2 HAMADOUCHE-BEUGNET API d'Authentification Documentation - Cabinet Médical
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: support@cabinetmedical.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'noahbeugnet.alwaysdata.net'
+basePath: '/'
+schemes:
+  - https
+paths:
+  /auth:
+    post:
+      tags:
+        - Authentification
+      summary: Demande d'authentification
+      description: Authentifie un utilisateur et retourne un jeton JWT.
+      operationId: authenticateUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: Les identifiants de l'utilisateur pour l'authentification.
+          required: true
+          schema:
+            type: object
+            properties:
+              login:
+                type: string
+              mdp:
+                type: string
+      responses:
+        200:
+          description: JWT généré avec succès.
+          schema:
+            $ref: '#/definitions/AuthSuccessResponse'
+        401:
+          description: Login ou mot de passe incorrect.
+          schema:
+            $ref: '#/definitions/AuthErrorResponse'
+    get:
+      tags:
+        - Authentification
+      summary: Demande de validation du jeton
+      description: Valide le jeton JWT pour vérifier sa validité.
+      operationId: validateToken
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          description: Bearer (JWT token)
+          required: true
+          type: string
+      responses:
+        200:
+          description: Accès autorisé. Le jeton JWT est valide.
+          schema:
+            $ref: '#/definitions/ValidTokenResponse'
+        401:
+          description: Accès non autorisé. Jeton invalide ou manquant.
+          schema:
+            $ref: '#/definitions/TokenErrorResponse'
+definitions:
+  AuthSuccessResponse:
+    type: object
+    properties:
+      status_code:
+        type: integer
+      status:
+        type: string
+      status_message:
+        type: string
+      data:
+        type: object
+        properties:
+          jwt:
+            type: string
+  AuthErrorResponse:
+    type: object
+    properties:
+      status_code:
+        type: integer
+      status:
+        type: string
+      status_message:
+        type: string
+      data:
+        type: 'null'
+  ValidTokenResponse:
+    type: object
+    properties:
+      status_code:
+        type: integer
+      status:
+        type: string
+      status_message:
+        type: string
+      data:
+        type: object
+        properties:
+          payload:
+            $ref: '#/definitions/TokenPayload'
+  TokenErrorResponse:
+    type: object
+    properties:
+      status_code:
+        type: integer
+      status:
+        type: string
+      status_message:
+        type: string
+      data:
+        type: 'null'
+  TokenPayload:
+    type: object
+    properties:
+      login:
+        type: string
+      role:
+        type: string
+      exp:
+        type: integer

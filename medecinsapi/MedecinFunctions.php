@@ -29,7 +29,8 @@ function deliver_response($status_code, $status_message, $data = null)
     echo $json_response;
 }
 
-function getAllMedecins() {
+function getAllMedecins()
+{
     global $conn;
     $sql = "SELECT * FROM medecin";
     try {
@@ -42,7 +43,8 @@ function getAllMedecins() {
     }
 }
 
-function getMedecinById($id) {
+function getMedecinById($id)
+{
     global $conn;
     $sql = "SELECT * FROM medecin WHERE ID_Medecin = :id";
     try {
@@ -61,7 +63,8 @@ function getMedecinById($id) {
     }
 }
 
-function addMedecin($input) {
+function addMedecin($input)
+{
     global $conn;
     if (empty($input['civilite']) || empty($input['nom']) || empty($input['prenom'])) {
         deliver_response(400, "Les champs 'civilite', 'nom', et 'prenom' sont requis.");
@@ -75,13 +78,20 @@ function addMedecin($input) {
         $stmt->bindParam(':nom', $input['nom']);
         $stmt->bindParam(':prenom', $input['prenom']);
         $stmt->execute();
-        deliver_response(201, "Médecin ajouté avec succès.");
+        // Récupérer les données du médecin après l'ajout
+        $existSql = "SELECT * FROM medecin WHERE ID_Medecin = :id";
+        $existStmt = $conn->prepare($existSql);
+        $existStmt->execute([':id' => $conn->lastInsertId()]);
+        $medecin = $existStmt->fetch(PDO::FETCH_ASSOC);
+
+        deliver_response(201, "Médecin ajouté avec succès.", $medecin);
     } catch (PDOException $e) {
         deliver_response(500, "Erreur interne du serveur: " . $e->getMessage());
     }
 }
 
-function updateMedecin($id, $input) {
+function updateMedecin($id, $input)
+{
     global $conn;
     $sets = [];
     $params = [':id' => $id];
@@ -99,15 +109,20 @@ function updateMedecin($id, $input) {
     try {
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
+        // Récupérer les données du médecin après la mise à jour
+        $existSql = "SELECT * FROM medecin WHERE ID_Medecin = :id";
+        $existStmt = $conn->prepare($existSql);
+        $existStmt->execute([':id' => $id]);
+        $medecin = $existStmt->fetch(PDO::FETCH_ASSOC);
         if ($stmt->rowCount() > 0) {
-            deliver_response(200, "Médecin modifié avec succès.");
+            deliver_response(200, "Médecin modifié avec succès.", $medecin);
         } else {
             $existCheckStmt = $conn->prepare("SELECT 1 FROM medecin WHERE ID_Medecin = :id");
             $existCheckStmt->execute([':id' => $id]);
             if ($existCheckStmt->fetch()) {
-                deliver_response(400, "Mise à jour non effectuée, les données correspondent déjà aux valeurs fournies.");
+                deliver_response(400, "Mise à jour non effectuée, les données correspondent déjà aux valeurs fournies., $medecin");
             } else {
-                deliver_response(404, "Aucun médecin trouvé avec l'ID spécifié.");
+                deliver_response(404, "Aucun médecin trouvé avec l'ID spécifié.", ['id' => $id]);
             }
         }
     } catch (PDOException $e) {
@@ -115,20 +130,38 @@ function updateMedecin($id, $input) {
     }
 }
 
-
-function deleteMedecin($id) {
+function deleteMedecin($id)
+{
     global $conn;
+    // Récupérer les données du médecin avant de le supprimer
+    $sql = "SELECT * FROM medecin WHERE ID_Medecin = :id";
+    try {
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $medecin = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($medecin === false) {
+            deliver_response(404, "Aucun médecin trouvé avec l'ID spécifié.", ['id' => $id]);
+            return;
+        }
+    } catch (PDOException $e) {
+        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
+        return;
+    }
+
+    // Supprimer le médecin
     $sql = "DELETE FROM medecin WHERE ID_Medecin = :id";
     try {
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
-            deliver_response(200, "Médecin supprimé avec succès.");
+            deliver_response(200, "Médecin supprimé avec succès.", $medecin);
         } else {
-            deliver_response(404, "Aucun médecin trouvé avec cet ID.");
+            deliver_response(404, "Aucun médecin trouvé avec l'ID spécifié.", ['id' => $id]);
         }
     } catch (PDOException $e) {
-        deliver_response(500, "Erreur interne du serveur: " . $e->getMessage());
+        deliver_response(500, "Erreur : " . $e->getMessage(), ['id' => $id]);
     }
 }
+

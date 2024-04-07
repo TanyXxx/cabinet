@@ -1,20 +1,21 @@
 RewriteEngine On
+
 # Réécriture pour l'API medecins
-RewriteRule ^medecins$ medecinsapi/index.php [NC,L]
-RewriteRule ^medecins/([0-9]+)$ medecinsapi/index.php?id=$1 [NC,L]
+RewriteRule ^app/medecins$ medecinsapi/index.php [NC,L]
+RewriteRule ^app/medecins/([0-9]+)$ medecinsapi/index.php?id=$1 [NC,L]
 
 # Réécriture pour l'API usagers
-RewriteRule ^usagers$ usagersapi/index.php [NC,L]
-RewriteRule ^usagers/([0-9]+)$ usagersapi/index.php?id=$1 [NC,L]
+RewriteRule ^app/usagers$ usagersapi/index.php [NC,L]
+RewriteRule ^app/usagers/([0-9]+)$ usagersapi/index.php?id=$1 [NC,L]
 
 # Réécriture pour l'API consultations
-RewriteRule ^consultations$ consultationsapi/index.php [NC,L]
-RewriteRule ^consultations/([0-9]+)$ consultationsapi/index.php?id=$1 [NC,L]
-RewriteRule ^consultations/medecin/([0-9]+)$ consultationsapi/index.php?id_medecin=$1 [NC,L]
+RewriteRule ^app/consultations$ consultationsapi/index.php [NC,L]
+RewriteRule ^app/consultations/([0-9]+)$ consultationsapi/index.php?id=$1 [NC,L]
+RewriteRule ^app/consultations/medecin/([0-9]+)$ consultationsapi/index.php?id_medecin=$1 [NC,L]
 
 # Réécriture pour l'API stats
-RewriteRule ^stats/medecins$ statistiquesapi/index.php?type=medecins [NC,L]
-RewriteRule ^stats/usagers$ statistiquesapi/index.php?type=usagers [NC,L]
+RewriteRule ^app/stats/medecins$ statistiquesapi/index.php?type=medecins [NC,L]
+RewriteRule ^app/stats/usagers$ statistiquesapi/index.php?type=usagers [NC,L]
 
 # Réécriture pour l'API auth
 RewriteRule ^auth$ authapi/index.php [NC,L]

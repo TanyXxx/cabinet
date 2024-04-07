@@ -3,16 +3,16 @@ info:
   description: >-
     **R4.01 : Gestion des consultations d'un cabinet médical avec contrôle d'accès.**
 
-    Cette collection Postman contient toutes les requêtes nécessaires pour interagir avec l'API du système de gestion des consultations médicales, qui est divisée en deux parties principales : AppMed pour la gestion des ressources et AuthAPI pour l'authentification.
+    Cette collection Postman contient toutes les requêtes nécessaires pour interagir avec l'API du système de gestion des consultations médicales.
   version: 1.0.0
   title: C2 HAMADOUCHE-BEUGNET API Documentation
   termsOfService: 'http://swagger.io/terms/'
   contact:
-    email: soltan.hamadouche@gmail.com
+    email: support@cabinetmedical.com
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: soltanhamadouche.alwaysdata.net
+host: soltanhamadouche.alwaysdata.net/app
 basePath: /
 schemes:
   - https
@@ -23,8 +23,6 @@ tags:
     description: Opérations concernant les usagers
   - name: Consultations
     description: Opérations concernant les consultations médicales
-  - name: Authentification
-    description: Opérations d'authentification et de sécurité
   - name: Statistiques
     description: Opérations liées aux statistiques de l'application
 security:
@@ -34,63 +32,13 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-    description: >-
+    description: 
       Pour accéder à l'API, un jeton d'authentification est requis. Le jeton est obtenu via l'API AuthAPI. Utilisez ce jeton comme clé API pour l'authentifier sur les endpoints qui nécessitent une authentification.
 paths:
-  /auth:
-    post:
-      tags:
-        - Authentification
-      summary: Demande d'authentification
-      description: Authentifie un utilisateur et retourne un jeton JWT.
-      operationId: authentification
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: credentials
-          description: Les identifiants de l'utilisateur pour l'authentification.
-          required: true
-          schema:
-            type: object
-            required:
-              - login
-              - mdp
-            properties:
-              login:
-                type: string
-                example: secretaire1
-              mdp:
-                type: string
-                example: password1234!
-      responses:
-        200:
-          description: Authentification réussie, jeton JWT retourné.
-          schema:
-            type: object
-            properties:
-              jwt:
-                type: string
-                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-        401:
-          description: Authentification échouée, identifiants invalides.
-    get:
-      tags:
-        - Authentification
-      summary: Demande de validation du jeton
-      description: Valide le jeton JWT pour vérifier sa validité.
-      operationId: validationToken
-      produces:
-        - application/json
-      responses:
-        200:
-          description: Jeton valide.
-        401:
-          description: Jeton invalide ou expiré.
   /usagers:
     post:
+      security:
+        - Bearer: []
       tags:
         - Usagers
       summary: Créer un usager
@@ -151,7 +99,7 @@ paths:
                 type: string
                 example: 112233445566778
               id_medecin:
-                type: string
+                type: integer
                 example: 1
       responses:
         201:
@@ -159,6 +107,8 @@ paths:
         400:
           description: Informations de l'usager manquantes ou invalides.
     get:
+      security:
+        - Bearer: []
       tags:
         - Usagers
       summary: Obtenir tous les usagers
@@ -176,6 +126,8 @@ paths:
 
   /usagers/{id}:
     get:
+      security:
+        - Bearer: []
       tags :
         - Usagers
       summary: Obtenir un usager par son ID
@@ -194,7 +146,9 @@ paths:
           description: Usager récupéré avec succès.
         404:
           description: Usager non trouvé.
-    patch:
+    patch:  
+      security:
+        - Bearer: []
       tags:
         - Usagers
       summary: Modifier un usager
@@ -223,13 +177,15 @@ paths:
               ville:
                 type: string
               id_medecin:
-                type: string
+                type: integer
       responses:
         200:
           description: Usager mis à jour avec succès.
         404:
           description: Usager non trouvé.
     delete:
+      security:
+        - Bearer: []
       tags:
         - Usagers
       summary: Supprimer un usager
@@ -250,6 +206,8 @@ paths:
           description: Usager non trouvé.
   /medecins:
     post:
+      security:
+        - Bearer: []
       tags:
         - Médecins
       summary: Créer un médecin
@@ -287,6 +245,8 @@ paths:
           description: Informations invalides fournies.
 
     get:
+      security:
+        - Bearer: []
       tags:
         - Médecins
       summary: Obtenir tous les médecins
@@ -304,6 +264,8 @@ paths:
 
   /medecins/{id}:
     get:
+      security:
+        - Bearer: []
       tags:
         - Médecins
       summary: Obtenir un médecin par son ID
@@ -324,6 +286,8 @@ paths:
           description: Médecin non trouvé.
 
     patch:
+      security:
+        - Bearer: []
       tags:
         - Médecins
       summary: Modifier un médecin
@@ -355,6 +319,8 @@ paths:
           description: Médecin non trouvé.
 
     delete:
+      security:
+        - Bearer: []
       tags:
         - Médecins
       summary: Supprimer un médecin
@@ -376,6 +342,8 @@ paths:
 
   /consultations:
     post:
+      security:
+        - Bearer: []
       tags:
         - Consultations
       summary: Créer une consultation
@@ -403,7 +371,7 @@ paths:
                 type: string
                 example: "2"
               id_medecin:
-                type: string
+                type: integer
                 example: "8"
               date_consult:
                 type: string
@@ -419,6 +387,8 @@ paths:
           description: Consultation créée avec succès.
 
     get:
+      security:
+        - Bearer: []
       tags:
         - Consultations
       summary: Obtenir toutes les consultations
@@ -436,6 +406,8 @@ paths:
 
   /consultations/{id}:
     get:
+      security:
+        - Bearer: []
       tags:
         - Consultations
       summary: Obtenir une consultation par son ID
@@ -456,6 +428,8 @@ paths:
           description: Consultation non trouvée.
 
     patch:
+      security:
+        - Bearer: []
       tags:
         - Consultations
       summary: Modifier une consultation
@@ -493,6 +467,8 @@ paths:
           description: Consultation non trouvée.
 
     delete:
+      security:
+        - Bearer: []
       tags:
         - Consultations
       summary: Supprimer une consultation
@@ -514,6 +490,8 @@ paths:
 
   /consultations/medecin/{id_medecin}:
     get:
+      security:
+        - Bearer: []
       tags:
         - Consultations
       summary: Obtenir les consultations d'un médecin
@@ -537,6 +515,8 @@ paths:
 
   /stats/medecins:
     get:
+      security:
+        - Bearer: []
       tags:
         - Statistiques
       summary: Stats médecins
@@ -554,6 +534,8 @@ paths:
 
   /stats/usagers:
     get:
+      security:
+        - Bearer: []
       tags:
         - Statistiques
       summary: Stats usagers
@@ -574,7 +556,7 @@ definitions:
     type: object
     properties:
       id:
-        type: string
+        type: integer
         example: "22"
       civilite:
         type: string
@@ -607,14 +589,14 @@ definitions:
         type: string
         example: "123456789012345"
       id_medecin:
-        type: string
+        type: integer
         example: "1"
 
   Medecin:
     type: object
     properties:
       id:
-        type: string
+        type: integer
         example: "22"
       civilite:
         type: string
@@ -630,13 +612,13 @@ definitions:
     type: object
     properties:
       id:
-        type: string
+        type: integer
         example: "53"
       id_usager:
-        type: string
+        type: integer
         example: "2"
       id_medecin:
-        type: string
+        type: integer
         example: "8"
       date_consult:
         type: string

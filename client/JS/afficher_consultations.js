@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function fetchConsultations() {
-    fetch('https://soltanhamadouche.alwaysdata.net/consultations', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/consultations', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ function displayConsultations(response) {
                 deleteButton.textContent = 'Supprimer';
                 deleteButton.onclick = function () {
                     if (confirm('Êtes-vous sûr de vouloir supprimer cette consultation?')) {
-                        fetch(`https://soltanhamadouche.alwaysdata.net/consultations/${consultation.ID_Consultation}`, {
+                        fetch(`https://soltanhamadouche.alwaysdata.net/app/consultations/${consultation.ID_Consultation}`, {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ window.attachEventToEditForm = attachEventToEditForm;
 
 
 function fetchUsagersForDropdown(dropdownId) {
-    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/usagers', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ function attachEventToEditForm() {
 window.attachEventToEditForm = attachEventToEditForm;
 
 function prepareAndShowEditModal(consultationID) {
-    fetch(`https://soltanhamadouche.alwaysdata.net/consultations/${consultationID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/app/consultations/${consultationID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ async function submitEditModalForm() {
         duree_consult: document.getElementById('editConsultationDuree').value,
     };
 
-    fetch(`https://soltanhamadouche.alwaysdata.net/consultations/${consultationID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/app/consultations/${consultationID}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
@@ -253,7 +253,7 @@ function submitAddConsultationForm() {
         duree_consult: form.elements['duree'].value
     };
 
-    fetch('https://soltanhamadouche.alwaysdata.net/consultations', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/consultations', {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
@@ -291,7 +291,7 @@ function displayApiAddResponseMessage(message, type) {
 }
 
 function fetchUsagersForDropdown(dropdownId) {
-    fetch('https://soltanhamadouche.alwaysdata.net/usagers', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/usagers', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -317,7 +317,7 @@ function fetchUsagersForDropdown(dropdownId) {
 }
 
 function fetchMedecinsForDropdown(dropdownId) {
-    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/medecins', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -354,7 +354,7 @@ function filterConsultationsByDoctor() {
     }
 
     // Sinon, récupérez les consultations pour le médecin sélectionné
-    fetch(`https://soltanhamadouche.alwaysdata.net/consultations/medecin/${selectedDoctor}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/app/consultations/medecin/${selectedDoctor}`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('jwt')

@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Réécriture pour l'API auth
+RewriteRule ^auth$ authapi/index.php [NC,L]

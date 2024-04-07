@@ -17,12 +17,11 @@ switch ($method) {
     case 'GET':
         $jwt = get_bearer_token();
 
-        if ($jwt && is_jwt_valid($jwt, 'your_secret_key')) {
+        if ($jwt && is_jwt_valid($jwt, 'secret_key')) {
             $payload = json_decode(base64url_decode(explode('.', $jwt)[1]), true);
-            echo json_encode(['message' => 'Accès autorisé. Le jeton JWT est valide.', 'payload' => $payload]);
+            deliver_response(200, 'Accès autorisé. Le jeton JWT est valide.', ['payload' => $payload]);
         } else {
-            http_response_code(401);
-            echo json_encode(['error' => 'Accès non autorisé. Jeton invalide ou manquant.']);
+            deliver_response(401, 'Accès non autorisé. Jeton invalide ou manquant.');
         }
         break;
         
@@ -30,7 +29,7 @@ switch ($method) {
         // Récupération du login et mot de passe depuis les données reçues
         $input = json_decode(file_get_contents('php://input'), true);
         $login = $input['login'] ?? '';
-        $password = $input['mdp'] ?? '';;
+        $password = $input['mdp'] ?? '';
 
         // Vérifier l'utilisateur dans la base de données
         $user = verify_user($login, $password);
@@ -41,20 +40,18 @@ switch ($method) {
             $payload = [
                 'login' => $user['NomUtilisateur'], 
                 'role' => $user['Role'], 
-                'exp' => (time() + 60 * 60) // Expiration après 1 heure
+                'exp' => (time() + 60 * 60 * 24) // Expiration après 24 heure
             ];             
-            $jwt = generate_jwt($headers, $payload, 'your_secret_key'); 
+            $jwt = generate_jwt($headers, $payload, 'secret_key'); 
 
-            echo json_encode(['jwt' => $jwt]);
+            deliver_response(200, 'JWT généré avec succès.', ['jwt' => $jwt]);
         } else {
-            http_response_code(401); // Non autorisé
-            echo json_encode(['error' => 'Login ou mot de passe incorrect']);
+            deliver_response(401, 'Login ou mot de passe incorrect.');
         }
         break;
 
     default:
-        http_response_code(405); // Méthode non autorisée
-        echo json_encode(['error' => 'Méthode non autorisée']);
+        deliver_response(405, 'Méthode non autorisée.');
         break;
 }
 

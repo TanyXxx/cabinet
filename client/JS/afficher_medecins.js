@@ -26,7 +26,7 @@ function attachEventListeners() {
 window.attachEventListeners = attachEventListeners;
 
 function fetchMedecins() {
-    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/medecins', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ function displayMedecins(response) {
 }
 
 function prepareAndShowEditModal(medecinID) {
-    fetch(`https://soltanhamadouche.alwaysdata.net/medecins/${medecinID}`, {
+    fetch(`https://soltanhamadouche.alwaysdata.net/app/medecins/${medecinID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ function fillEditModal(medecin) {
 
 function deleteMedecin(medecinID) {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce médecin?')) {
-        fetch(`https://soltanhamadouche.alwaysdata.net/medecins/${medecinID}`, {
+        fetch(`https://soltanhamadouche.alwaysdata.net/app/medecins/${medecinID}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -177,7 +177,7 @@ function submitAddMedecinForm() {
         prenom: document.getElementById('addPrenom').value
     };
 
-    fetch('https://soltanhamadouche.alwaysdata.net/medecins', {
+    fetch('https://soltanhamadouche.alwaysdata.net/app/medecins', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -227,7 +227,7 @@ async function submitEditModalForm() {
     };
 
     try {
-        const response = await fetch(`https://soltanhamadouche.alwaysdata.net/medecins/${document.getElementById('editIdMedecin').value}`, {
+        const response = await fetch(`https://soltanhamadouche.alwaysdata.net/app/medecins/${document.getElementById('editIdMedecin').value}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

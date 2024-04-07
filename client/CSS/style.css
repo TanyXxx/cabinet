@@ -245,3 +245,26 @@ a:hover {
     border: 1px solid #ccc; /* Ajoute une bordure */
     border-radius: 5px; /* Arrondit les coins */
 }
+
+.card {
+    margin: 20px 0; /* Ajoute une marge au-dessus et en dessous de la carte */
+    padding: 20px; /* Ajoute un padding à l'intérieur de la carte */
+    background-color: #fff; /* Change la couleur de fond de la carte */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Ajoute une ombre à la carte */
+    border-radius: 5px; /* Arrondit les coins de la carte */
+}
+
+.card-title {
+    font-size: 1.5em; /* Augmente la taille de la police du titre */
+    margin-bottom: 15px; /* Ajoute un espace sous le titre */
+}
+
+.card-text {
+    color: #333; /* Change la couleur du texte */
+    line-height: 1.5; /* Augmente l'espacement des lignes */
+}
+
+.btn-primary {
+    background-color: #3498db; /* Change la couleur de fond du bouton */
+    border-color: #3498db; /* Change la couleur de la bordure du bouton */
+}

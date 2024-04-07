@@ -1,11 +1,10 @@
 {
 	"info": {
-		"_postman_id": "0feff27f-de4c-4aef-91b5-7956ccad38e8",
-		"name": "NumEquipe NOM1-NOM2",
+		"_postman_id": "c60b756b-3ed6-4c47-b451-e0c060ad5e5f",
+		"name": "C2 HAMADOUCHE-BEUGNET",
 		"description": "### **R4.01 : Gestion des consultations d'un cabinet médical avec contrôle d'accès.**\n\n2 APIS vont être nécessaires :\n\n**\\- AppMed** : API de gestions des ressources suivantes :\n\n- Médecin\n    \n- Patient\n    \n- Consultation\n    \n- Statistiques\n    \n\n**\\- AuthAPI** : API d'authentification indépendante de AppMed mais AppMed utilisera le format des jetons pour contrôles l'accès à ses ressources.\n\nPour faciliter l'évaluation des correcteurs, vous devrez obligatoirement automatiser la gestion du jeton afin que les correcteurs n'est pas",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20008260",
-		"_collection_link": "https://orange-zodiac-772299.postman.co/workspace/R401-Mini-Projet~36f23962-b66a-43a0-b481-551764769113/collection/20008260-0feff27f-de4c-4aef-91b5-7956ccad38e8?action=share&source=collection_link&creator=20008260"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32827532"
 	},
 	"item": [
 		{
@@ -28,15 +27,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url_app_med}}/medecin",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"medecin"
-									]
-								}
+								"url": "{{url_app}}/medecins"
 							},
 							"response": []
 						},
@@ -44,7 +35,8 @@
 							"name": "Obtenir tous les médecins",
 							"request": {
 								"method": "GET",
-								"header": []
+								"header": [],
+								"url": "{{url_app}}/medecins"
 							},
 							"response": []
 						},
@@ -62,16 +54,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url_app_med}}/medecins/1",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"medecins",
-										"1"
-									]
-								}
+								"url": "{{url_app}}/medecins/1"
 							},
 							"response": []
 						},
@@ -80,16 +63,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/medecins/1",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"medecins",
-										"1"
-									]
-								}
+								"url": "{{url_app}}/medecins/1"
 							},
 							"response": []
 						},
@@ -98,16 +72,7 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/medecins/1",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"medecins",
-										"1"
-									]
-								}
+								"url": "{{url_app}}/medecins/1"
 							},
 							"response": []
 						}
@@ -123,22 +88,14 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"civilite\":\"M.\",\r\n    \"nom\":\"Dumond\",\r\n    \"prenom\":\"Armand\",\r\n    \"sexe\":\"H\",\r\n    \"adresse\":\"85, Square de la Couronne\",\r\n    \"code_postal\":\"91120\",\r\n    \"ville\":\"Palaiseau\",\r\n    \"date_nais\":\"14/05/1952\",\r\n    \"lieu_nais\":\"Nantes\",\r\n    \"num_secu\":\"112233445566778\"\r\n}",
+									"raw": "{\r\n    \"civilite\":\"M.\",\r\n    \"nom\":\"Dumond\",\r\n    \"prenom\":\"Armand\",\r\n    \"sexe\":\"H\",\r\n    \"adresse\":\"85, Square de la Couronne\",\r\n    \"code_postal\":\"91120\",\r\n    \"ville\":\"Palaiseau\",\r\n    \"date_nais\":\"14/05/1952\",\r\n    \"lieu_nais\":\"Nantes\",\r\n    \"num_secu\":\"112233445566778\",\r\n    \"id_medecin\":\"1\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url_app_med}}/usagers",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"usagers"
-									]
-								}
+								"url": "{{url_app}}/usagers"
 							},
 							"response": []
 						},
@@ -147,15 +104,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/usagers",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"usagers"
-									]
-								}
+								"url": "{{url_app}}/usagers"
 							},
 							"response": []
 						},
@@ -166,23 +115,14 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"adresse\":\"85, Square de la Couronne\",\r\n    \"code_postal\":\"91120\",\r\n    \"ville\":\"Palaiseau\"\r\n}",
+									"raw": "{\r\n    \"adresse\":\"85, Square de la Couronne\",\r\n    \"code_postal\":\"91120\",\r\n    \"ville\":\"Palaiseau\",\r\n    \"id_medecin\":\"1\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url_app_med}}/usagers/2",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"usagers",
-										"2"
-									]
-								}
+								"url": "{{url_app}}/usagers/2"
 							},
 							"response": []
 						},
@@ -191,16 +131,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/usagers/2",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"usagers",
-										"2"
-									]
-								}
+								"url": "{{url_app}}/usagers/2"
 							},
 							"response": []
 						},
@@ -209,16 +140,7 @@
 							"request": {
 								"method": "DELETE",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/usagers/2",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"usagers",
-										"2"
-									]
-								}
+								"url": "{{url_app}}/usagers/2"
 							},
 							"response": []
 						}
@@ -241,15 +163,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url_app_med}}/consultations",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"consultations"
-									]
-								}
+								"url": "{{url_app}}/consultations"
 							},
 							"response": []
 						},
@@ -258,15 +172,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/consultations",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"consultations"
-									]
-								}
+								"url": "{{url_app}}/consultations"
 							},
 							"response": []
 						},
@@ -284,46 +190,16 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url_app_med}}/consultations/6",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"consultations",
-										"6"
-									]
-								}
+								"url": "{{url_app}}/consultations/6"
 							},
 							"response": []
 						},
 						{
 							"name": "Obtenir une consultation (id)",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url_app_med}}/consultations/6",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"consultations",
-										"6"
-									]
-								}
+								"url": "{{url_app}}/consultations/6"
 							},
 							"response": []
 						},
@@ -341,16 +217,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "{{url_app_med}}/consultations/6",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"consultations",
-										"6"
-									]
-								}
+								"url": "{{url_app}}/consultations/6"
 							},
 							"response": []
 						}
@@ -364,16 +231,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/stats/medecins",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"stats",
-										"medecins"
-									]
-								}
+								"url": "{{url_app}}/stats/medecins"
 							},
 							"response": []
 						},
@@ -382,16 +240,7 @@
 							"request": {
 								"method": "GET",
 								"header": [],
-								"url": {
-									"raw": "{{url_app_med}}/stats/usagers",
-									"host": [
-										"{{url_app_med}}"
-									],
-									"path": [
-										"stats",
-										"usagers"
-									]
-								}
+								"url": "{{url_app}}/stats/usagers"
 							},
 							"response": []
 						}
@@ -404,14 +253,7 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							"if (pm.environment.get(\"use_auth\") === \"true\") {",
-							"    pm.request.headers.add({",
-							"        key: 'Authorization',",
-							"        value: 'Bearer ' + pm.environment.get(\"token\")",
-							"    });",
-							"} else {",
-							"    pm.request.headers.remove('Authorization');",
-							"}"
+							""
 						]
 					}
 				},
@@ -436,9 +278,11 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"var jsonData = pm.response.json(); \r",
+									"pm.collectionVariables.set(\"token\", jsonData.data.jwt); "
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -454,12 +298,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{url_auth}}",
-							"host": [
-								"{{url_auth}}"
-							]
-						}
+						"url": "{{url_auth}}"
 					},
 					"response": []
 				},
@@ -468,12 +307,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{url_auth}}",
-							"host": [
-								"{{url_auth}}"
-							]
-						}
+						"url": "{{url_auth}}"
 					},
 					"response": []
 				}
@@ -486,7 +320,12 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"if (pm.collectionVariables.get(\"token\")) {\r",
+					"    pm.request.headers.add({\r",
+					"        key: 'Authorization',\r",
+					"        value: 'Bearer ' + pm.collectionVariables.get(\"token\")\r",
+					"    });\r",
+					"}"
 				]
 			}
 		},
@@ -503,12 +342,12 @@
 	"variable": [
 		{
 			"key": "url_auth",
-			"value": "http://localhost/authapi",
+			"value": "https://noahbeugnet.alwaysdata.net/auth",
 			"type": "string"
 		},
 		{
 			"key": "url_app",
-			"value": "http://localhost/cabmed",
+			"value": "https://soltanhamadouche.alwaysdata.net/app",
 			"type": "string"
 		},
 		{

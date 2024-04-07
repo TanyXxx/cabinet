@@ -21,13 +21,13 @@
 .image-index{
     margin-left: 25em;
     width: 50%;
-    height: 75vh;
+    height: auto;
     border: 2px solid;
 }
 
 .image-index img{
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
+    height: auto;
 }
 
 
@@ -60,6 +60,9 @@
 
 label {
     font-weight: bold;
+    font-size: 1.2em; /* Augmente la taille de la police */
+    color: #333; /* Change la couleur du texte */
+    margin-right: 10px; /* Ajoute un espace à droite du label */
 }
 
 select,
@@ -206,8 +209,6 @@ a:hover {
 }
 
 
-
-
 .body-afficher-consultation{
     display: flex;
     flex-direction: column;
@@ -234,4 +235,13 @@ a:hover {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
+}
+
+#filterByDoctor {
+    padding: 5px 10px; /* Ajoute un padding à l'intérieur du select */
+    font-size: 1em; /* Augmente la taille de la police */
+    color: #333; /* Change la couleur du texte */
+    background-color: #f2f2f2; /* Change la couleur de fond */
+    border: 1px solid #ccc; /* Ajoute une bordure */
+    border-radius: 5px; /* Arrondit les coins */
 }

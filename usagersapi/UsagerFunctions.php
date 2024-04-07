@@ -160,12 +160,12 @@ function updateUsager($id, $data)
     global $conn;
     // Vérifier si le numéro de sécurité sociale existe déjà
     if (isset($data['num_secu'])) {
-        $secuSql = "SELECT 1 FROM usager WHERE Num_Secu = :num_secu AND ID_USAGER != :id";
+        $secuSql = "SELECT 1 FROM usager WHERE Numero_Secu = :num_secu AND ID_USAGER != :id";
         $secuStmt = $conn->prepare($secuSql);
         $secuStmt->execute([':num_secu' => $data['num_secu'], ':id' => $id]);
         if ($secuStmt->rowCount() > 0) {
             deliver_response(400, "Le numéro de sécurité sociale est déjà utilisé.", ['num_secu' => $data['num_secu']]);
-            exit();
+            return;
         }
     }
 
